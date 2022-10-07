@@ -1,33 +1,43 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { Home } from "./components/pages/Home";
+import Layout from "./components/layout/Layout";
+import { SearchResults } from "./components/pages/SearchReults";
+import { MentorDetail } from "./components/pages/MentorDetail";
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#794de8",
+        light: "#af7bff",
+        dark: "#800fbd",
+        mainGradient:
+          "linear-gradient(91.91deg, #95ACFF 1.51%, #C6A2FF 98.39%)",
+        contrastText: "#FFF7F0",
+      },
+      background: {
+        paper: "#F9F9F9",
+        default: "#F9F9F9",
+      },
+    },
+  });
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <ThemeProvider theme={theme}>
+      <CssBaseline enableColorScheme />
+      <div className="App">
+        <BrowserRouter>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/mentor/search" element={<SearchResults />} />
+              <Route path="/mentor/:mentorID" element={<MentorDetail />} />
+            </Routes>
+          </Layout>
+        </BrowserRouter>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button type="button" onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    </ThemeProvider>
   );
 }
 

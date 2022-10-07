@@ -14,8 +14,19 @@
     "*.{js,jsx}": "npm run lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/icons-material": "^5.10.6",
+    "@mui/material": "^5.10.8",
+    "@mui/system": "^5.10.8",
+    "query-string": "^7.1.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-elastic-carousel": "^0.11.5",
+    "react-material-ui-carousel": "^3.4.2",
+    "react-router-dom": "^6.4.1",
+    "styled-components": "^5.3.6",
+    "vite-plugin-svgr": "^2.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
