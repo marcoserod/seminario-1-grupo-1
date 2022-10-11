@@ -30,7 +30,7 @@ export const db = {
         "Soy una Desarrolladora backend con amplios conocimientos en construcción de aplicaciones de software de uso masivo. También brindó capacitaciones en la empresa que trabajó. Me apasiona la idea de poder transmitir mis conocimientos adquiridos a lo largo de estos años a otros colegas.",
       reviews: [
         {
-          studentName: "Paula Gonzalez",
+          studentName: "Paula Gómez",
           img: paula,
           comment: {
             date: "2022-10-05T03:18:27.532Z",
@@ -52,7 +52,7 @@ export const db = {
           id: 3,
         },
         {
-          studentName: "Paula Gonzalez",
+          studentName: "María Gonzalez",
           img: maria,
           comment: {
             date: "2022-09-20T03:18:27.532Z",
@@ -88,7 +88,7 @@ export const db = {
         "Soy un desarrallor front-end senior. Me recibí en Licenciatura en informatica y desde hace 8 años, he trabajado en distintas compañias nacionales como internacionales.",
       reviews: [
         {
-          studentName: "Paula Gonzalez",
+          studentName: "Paula Gómez",
           img: paula,
           comment: {
             date: "2022-10-05T03:18:27.532Z",
@@ -110,7 +110,7 @@ export const db = {
           id: 3,
         },
         {
-          studentName: "Paula Gonzalez",
+          studentName: "María Gonzalez",
           img: maria,
           comment: {
             date: "2022-09-20T03:18:27.532Z",
@@ -145,7 +145,7 @@ export const db = {
         "Soy un facilitador por naturaleza, la tecnología está cambiando el mundo y me entusiasma poder acompañar y ayudar al alumno brindándole oportunidades para que pueda encontrar y seguir su plan de carrera.",
       reviews: [
         {
-          studentName: "Paula Gonzalez",
+          studentName: "Paula Gómez",
           img: paula,
           comment: {
             date: "2022-10-05T03:18:27.532Z",
@@ -167,7 +167,7 @@ export const db = {
           id: 3,
         },
         {
-          studentName: "Paula Gonzalez",
+          studentName: "Maria Gonzalez",
           img: maria,
           comment: {
             date: "2022-09-20T03:18:27.532Z",
