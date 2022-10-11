@@ -5,6 +5,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Container from "@mui/material/Container";
 import { cloneElement } from "react";
+import { Link } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -31,9 +33,18 @@ export default function Layout(props) {
         >
           <Container disableGutters>
             <Toolbar>
-              <Typography variant="h6" component="div">
-                MentorAR
-              </Typography>
+              <Link
+                component={RouterLink}
+                to="/"
+                underline="none"
+                sx={{ color: "unset" }}
+              >
+                <Typography variant="h6" component="div">
+                  <span>Mentor</span>
+                  <span style={{ fontStyle: "italic" }}>e</span>
+                  <span style={{ fontWeight: "bold" }}>AR</span>
+                </Typography>
+              </Link>
             </Toolbar>
           </Container>
         </AppBar>

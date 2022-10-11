@@ -7,13 +7,13 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import {
-  Accordion,
   AccordionDetails,
   AccordionSummary,
   Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
+  Grid,
   InputAdornment,
   Radio,
   RadioGroup,
@@ -28,6 +28,7 @@ import { useLocation } from "react-router-dom";
 import { SearchOutlined } from "@mui/icons-material";
 import { skills as skillList } from "./helpers";
 import { debounce } from "../../../utils";
+import { ControlledAccordion } from "../../atoms/ControlledAccordion";
 
 const drawerWidth = 240;
 
@@ -43,6 +44,8 @@ export const FiltersDrawer = ({
   const initSkills = parsedQuery.skills;
   const initServices = parsedQuery.services;
   const initRating = parsedQuery.rating;
+  const initMinExp = parsedQuery.minExp;
+  const initMaxExp = parsedQuery.maxExp;
   const parseQueryToState = useCallback((initQuery) => {
     if (initQuery) {
       return typeof initQuery === "string" ? [initQuery] : initQuery;
@@ -53,8 +56,15 @@ export const FiltersDrawer = ({
   const [skills, setSkills] = useState(parseQueryToState(initSkills));
   const [services, setServices] = useState(parseQueryToState(initServices));
   const [rating, setRating] = useState(initRating || "");
-  const isFiltered = [...skills, ...services, rating].some((value) => value);
   const [skillSearch, setSkillSearch] = useState("");
+  const [expRange, setExpRange] = useState({
+    min: initMinExp || "",
+    max: initMaxExp || "",
+  });
+  const { min, max } = expRange;
+  const isFiltered = [...skills, ...services, rating, min, max].some(
+    (value) => value
+  );
 
   const isChecked = (name, state) => {
     return state.some((item) => item === name);
@@ -64,6 +74,10 @@ export const FiltersDrawer = ({
     setServices([]);
     setRating("");
     setSkillSearch("");
+    setExpRange({
+      min: "",
+      max: "",
+    });
   };
 
   const handleSkillsChange = (event) => {
@@ -106,6 +120,19 @@ export const FiltersDrawer = ({
     skill.toLowerCase().includes(skillSearch.toLowerCase())
   );
 
+  const handleMinExpChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setExpRange((prev) => ({ ...prev, min: value }));
+  };
+  const handleMaxExpChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setExpRange((prev) => ({ ...prev, max: value }));
+  };
+
   const drawer = (
     <div>
       <Toolbar>
@@ -119,8 +146,8 @@ export const FiltersDrawer = ({
         )}
       </Toolbar>
       <Divider />
-      <Accordion
-        defaultExpanded={Boolean(skills.length)}
+      <ControlledAccordion
+        defaultOpen={Boolean(skills.length)}
         sx={{ backgroundColor: "#EEEEEE50" }}
       >
         <AccordionSummary
@@ -168,9 +195,49 @@ export const FiltersDrawer = ({
             ))}
           </FormGroup>
         </AccordionDetails>
-      </Accordion>
-      <Accordion
-        defaultExpanded={Boolean(services.length)}
+      </ControlledAccordion>
+      <ControlledAccordion
+        defaultOpen={Boolean(min || max)}
+        sx={{ backgroundColor: "#EEEEEE50" }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>Experiencia</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="minExp"
+                fullWidth
+                id="minExp"
+                label="Mínima"
+                type="number"
+                value={expRange.min}
+                onChange={handleMinExpChange}
+                InputProps={{ inputProps: { min: 0 } }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                type="number"
+                id="maxExp"
+                label="Máxima"
+                name="maxExp"
+                value={expRange.max}
+                onChange={handleMaxExpChange}
+                InputProps={{ inputProps: { min: expRange.min || 0 } }}
+              />
+            </Grid>
+          </Grid>
+        </AccordionDetails>
+      </ControlledAccordion>
+      <ControlledAccordion
+        defaultOpen={Boolean(services.length)}
         sx={{ backgroundColor: "#EEEEEE50" }}
       >
         <AccordionSummary
@@ -210,9 +277,9 @@ export const FiltersDrawer = ({
             />
           </FormGroup>
         </AccordionDetails>
-      </Accordion>
-      <Accordion
-        defaultExpanded={Boolean(rating)}
+      </ControlledAccordion>
+      <ControlledAccordion
+        defaultOpen={Boolean(rating)}
         sx={{ backgroundColor: "#EEEEEE50" }}
       >
         <AccordionSummary
@@ -286,7 +353,7 @@ export const FiltersDrawer = ({
             />
           </RadioGroup>
         </AccordionDetails>
-      </Accordion>
+      </ControlledAccordion>
     </div>
   );
 
@@ -296,6 +363,8 @@ export const FiltersDrawer = ({
       skills,
       services,
       rating: rating || undefined,
+      minExp: expRange.min || undefined,
+      maxExp: expRange.max || undefined,
     };
     const query = queryString.stringify(activeFilters, {
       sort: (a, b) => order.indexOf(a) - order.indexOf(b),
@@ -307,7 +376,7 @@ export const FiltersDrawer = ({
 
   useEffect(() => {
     handleInnerFiltering();
-  }, [skills, services, rating]);
+  }, [skills, services, rating, min, max]);
 
   return (
     <Box
@@ -347,8 +416,8 @@ export const FiltersDrawer = ({
               position: "fixed",
               top: "initial",
               left: "initial",
-              height: "calc(100vh - 124px)",
               zIndex: 1000,
+              paddingBottom: "80px",
             },
           }}
           BackdropProps={{ style: { position: "absolute" } }}

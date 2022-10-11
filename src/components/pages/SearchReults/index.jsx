@@ -45,6 +45,17 @@ export const SearchResults = () => {
           ));
     }
 
+    if (parsedQuery.minExp) {
+      filteredData = filteredData.filter(
+        (mentor) => mentor.exp >= parsedQuery.minExp
+      );
+    }
+    if (parsedQuery.maxExp) {
+      filteredData = filteredData.filter(
+        (mentor) => mentor.exp <= parsedQuery.maxExp
+      );
+    }
+
     if (parsedQuery.services) {
       // eslint-disable-next-line no-unused-expressions
       [undefined, "string"].includes(typeof parsedQuery.services)

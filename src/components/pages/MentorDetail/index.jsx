@@ -11,18 +11,26 @@ import {
   AccordionDetails,
   AccordionSummary,
   Avatar,
+  Card,
+  CardContent,
+  CardMedia,
   Chip,
   Divider,
   Grid,
   IconButton,
+  Link,
+  Rating,
   Tooltip,
   Typography,
 } from "@mui/material";
 import { Box, Container, Stack } from "@mui/system";
 import { useRef } from "react";
 import { useParams } from "react-router-dom";
+
 import { db } from "../../../db/db";
 import { Comment } from "../../molecules/Comment";
+import mentorApp from "../../../assets/MentorearAPP.avif";
+import medium from "../../../assets/medium.webp";
 
 export const MentorDetail = () => {
   const { mentorID } = useParams();
@@ -57,8 +65,20 @@ export const MentorDetail = () => {
           />
           <Box sx={{ flexGrow: 1 }} />
           <Box alignSelf="flex-end">
-            <GitHub sx={{ fill: "#FFF" }} fontSize="large" />
-            <LinkedIn sx={{ fill: "#FFF" }} fontSize="large" />
+            <IconButton
+              component={Link}
+              href="https://github.com/"
+              target="_blank"
+            >
+              <GitHub sx={{ fill: "#FFF" }} fontSize="large" />
+            </IconButton>
+            <IconButton
+              component={Link}
+              href="https://www.linkedin.com/"
+              target="_blank"
+            >
+              <LinkedIn sx={{ fill: "#FFF" }} fontSize="large" />
+            </IconButton>
           </Box>
         </Container>
       </Box>
@@ -66,12 +86,24 @@ export const MentorDetail = () => {
         <Grid container>
           <Grid item xs={12} md={8}>
             <Stack>
+              <Rating
+                value={data.rating}
+                readOnly
+                size="medium"
+                precision={0.5}
+              />
               <Typography color="primary.dark" variant="h4">
                 {data.name}
               </Typography>
               <Typography color="primary.dark" gutterBottom>
                 {data.jobTitle}
-                <strong>{` @${data.jobCompany}`}</strong>
+                <strong>{` @${data.jobCompany} `}</strong>
+                <Chip
+                  component="span"
+                  label={`+${data.exp} exp`}
+                  color="primary"
+                  variant="outlined"
+                />
               </Typography>
             </Stack>
             <Grid container columnGap={2} rowSpacing={2} mt={1} mb={4}>
@@ -195,6 +227,61 @@ export const MentorDetail = () => {
                   <Chip label={skill} />
                 </Grid>
               ))}
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+      </Container>
+      <Container>
+        <Accordion defaultExpanded elevation={0}>
+          <AccordionSummary
+            expandIcon={<ExpandMore />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography color="primary" variant="h6" sx={{ fontWeight: 600 }}>
+              Más sobre {data.name}
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={1}>
+              <Grid item key="web">
+                <Card sx={{ maxWidth: 300 }}>
+                  <CardMedia
+                    component="img"
+                    height="150px"
+                    src={mentorApp}
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Mi Página web
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Soy {data.name}, y esta es mi página web, te invito a
+                      conocerme.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item key="article">
+                <Card sx={{ maxWidth: 300 }}>
+                  <CardMedia
+                    component="img"
+                    height="150px"
+                    src={medium}
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Mi Artículo
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Soy {data.name}, y este es mi artículo web, te invito a
+                      leerlo.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
             </Grid>
           </AccordionDetails>
         </Accordion>

@@ -64,7 +64,12 @@ export default function MentorCard({ data }) {
               alignItems: "center",
             }}
           >
-            <Rating value={data.rating} readOnly size="medium" />
+            <Rating
+              value={data.rating}
+              readOnly
+              size="medium"
+              precision={0.5}
+            />
             <Avatar
               src={data.img}
               sx={{
@@ -91,7 +96,13 @@ export default function MentorCard({ data }) {
               </Typography>
               <Typography color="primary.dark" gutterBottom>
                 {data.jobTitle}
-                <strong>{` @${data.jobCompany}`}</strong>
+                <strong>{` @${data.jobCompany} `}</strong>
+                <Chip
+                  component="span"
+                  label={`+${data.exp} exp`}
+                  color="primary"
+                  variant="outlined"
+                />
               </Typography>
               <Divider sx={{ mb: 1 }} />
               <Typography

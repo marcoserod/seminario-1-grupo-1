@@ -54,7 +54,12 @@ export const Home = () => {
       >
         <Container>
           <Grid container>
-            <Grid item xs={12} sm={6}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              sx={{ display: "flex", alignSelf: "center" }}
+            >
               <Typography
                 variant="h6"
                 sx={{
@@ -63,9 +68,24 @@ export const Home = () => {
                   color: (theme) => theme.palette.primary.contrastText,
                 }}
               >
-                FRASE INSPIRADORA PARA CREAR
-                <br />
-                ALTA EXPECTATIVA AL LEERLA.
+                <figure className="text-center mb-0">
+                  <blockquote
+                    cite="https://www.goodreads.com/author/show/136961.Phil_Collins"
+                    style={{ textIndent: "-0.45em", margin: "0.5rem" }}
+                  >
+                    <q>
+                      En el aprendizaje enseñarás, y en la enseñanza aprenderás
+                    </q>
+                  </blockquote>
+                  <figcaption
+                    style={{
+                      fontSize: "1rem",
+                      textAlign: "right",
+                    }}
+                  >
+                    &mdash; Phil Collins, <cite>Son of man</cite>
+                  </figcaption>
+                </figure>
               </Typography>
             </Grid>
             <Grid

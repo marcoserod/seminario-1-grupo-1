@@ -12,7 +12,7 @@ export const Comment = ({ review }) => {
     <Paper elevation={0} style={{ padding: "20px" }}>
       <Grid container wrap="nowrap" spacing={2}>
         <Grid item>
-          <Avatar alt="Remy Sharp" />
+          <Avatar alt="Remy Sharp" src={review.img} />
         </Grid>
         <Grid justifyContent="left" item xs zeroMinWidth>
           <Typography variant="h6" sx={{ textAlign: "left" }}>

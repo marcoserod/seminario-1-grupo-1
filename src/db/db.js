@@ -1,6 +1,9 @@
 import veronica from "../assets/veronica-diaz.jpeg";
 import thiago from "../assets/thiago-carpintero.png";
 import ricardo from "../assets/ricardo-lopez.png";
+import maria from "../assets/maria.png";
+import paula from "../assets/paula.png";
+import franco from "../assets/franco.png";
 
 export const db = {
   mentors: [
@@ -21,14 +24,16 @@ export const db = {
       ],
       services: ["free-mail", "weekly-calls"],
       rating: 5,
+      exp: 7,
       img: veronica,
       description:
         "Soy una Desarrolladora backend con amplios conocimientos en construcción de aplicaciones de software de uso masivo. También brindó capacitaciones en la empresa que trabajó. Me apasiona la idea de poder transmitir mis conocimientos adquiridos a lo largo de estos años a otros colegas.",
       reviews: [
         {
-          studentName: "Migules Migueles",
+          studentName: "Paula Gonzalez",
+          img: paula,
           comment: {
-            date: "2022-09-20T03:18:27.532Z",
+            date: "2022-10-05T03:18:27.532Z",
             message:
               "Muy buena mentora, aprendi muchisimo, y me guio en mis actividades laborales",
           },
@@ -36,14 +41,26 @@ export const db = {
           id: 1,
         },
         {
-          studentName: "Mateo Matete",
+          studentName: "Franco García",
+          img: franco,
           comment: {
-            date: "2022-10-05T03:18:27.532Z",
+            date: "2022-09-30T03:18:27.532Z",
             message:
               "Muy buena mentora, aprendi muchisimo, y me guio en mis actividades laborales",
           },
           rating: 5,
           id: 3,
+        },
+        {
+          studentName: "Paula Gonzalez",
+          img: maria,
+          comment: {
+            date: "2022-09-20T03:18:27.532Z",
+            message:
+              "Muy buena mentora, aprendi muchisimo, y me guio en mis actividades laborales",
+          },
+          rating: 5,
+          id: 2,
         },
       ],
     },
@@ -64,30 +81,44 @@ export const db = {
         "Web",
       ],
       services: ["fast-replies", "free-mail", "monthly-calls"],
-      rating: "4",
+      rating: 4,
       img: thiago,
+      exp: 8,
       description:
         "Soy un desarrallor front-end senior. Me recibí en Licenciatura en informatica y desde hace 8 años, he trabajado en distintas compañias nacionales como internacionales.",
       reviews: [
         {
-          studentName: "Migules Migueles",
-          comment: {
-            date: "2022-09-20T03:18:27.532Z",
-            message:
-              "Muy buena mentora, aprendi muchisimo, y me guio en mis actividades laborales",
-          },
-          rating: 5,
-          id: 1,
-        },
-        {
-          studentName: "Mateo Matete",
+          studentName: "Paula Gonzalez",
+          img: paula,
           comment: {
             date: "2022-10-05T03:18:27.532Z",
             message:
-              "Muy buena mentora, aprendi muchisimo, y me guio en mis actividades laborales",
+              "Muy buen mentor, aprendi muchisimo, y me guio en mis actividades laborales",
           },
-          rating: 5,
+          rating: 4,
+          id: 1,
+        },
+        {
+          studentName: "Franco García",
+          img: franco,
+          comment: {
+            date: "2022-09-30T03:18:27.532Z",
+            message:
+              "Muy buen mentor, aprendi muchisimo, y me guio en mis actividades laborales",
+          },
+          rating: 4,
           id: 3,
+        },
+        {
+          studentName: "Paula Gonzalez",
+          img: maria,
+          comment: {
+            date: "2022-09-20T03:18:27.532Z",
+            message:
+              "Muy buen mentor, aprendi muchisimo, y me guio en mis actividades laborales",
+          },
+          rating: 4,
+          id: 2,
         },
       ],
     },
@@ -107,30 +138,44 @@ export const db = {
         "Business",
       ],
       services: ["free-mail", "monthly-calls"],
-      rating: "4",
+      rating: 3.5,
+      exp: 6,
       img: ricardo,
       description:
         "Soy un facilitador por naturaleza, la tecnología está cambiando el mundo y me entusiasma poder acompañar y ayudar al alumno brindándole oportunidades para que pueda encontrar y seguir su plan de carrera.",
       reviews: [
         {
-          studentName: "Migules Migueles",
-          comment: {
-            date: "2022-09-20T03:18:27.532Z",
-            message:
-              "Muy buena mentora, aprendi muchisimo, y me guio en mis actividades laborales",
-          },
-          rating: 5,
-          id: 1,
-        },
-        {
-          studentName: "Mateo Matete",
+          studentName: "Paula Gonzalez",
+          img: paula,
           comment: {
             date: "2022-10-05T03:18:27.532Z",
             message:
-              "Muy buena mentora, aprendi muchisimo, y me guio en mis actividades laborales",
+              "Muy buen mentor, aprendi muchisimo, y me guio en mis actividades laborales",
           },
-          rating: 5,
+          rating: 3.5,
+          id: 1,
+        },
+        {
+          studentName: "Franco García",
+          img: franco,
+          comment: {
+            date: "2022-09-30T03:18:27.532Z",
+            message:
+              "Muy buen mentor, aprendi muchisimo, y me guio en mis actividades laborales",
+          },
+          rating: 4,
           id: 3,
+        },
+        {
+          studentName: "Paula Gonzalez",
+          img: maria,
+          comment: {
+            date: "2022-09-20T03:18:27.532Z",
+            message:
+              "Muy buen mentor, aprendi muchisimo, y me guio en mis actividades laborales",
+          },
+          rating: 3,
+          id: 2,
         },
       ],
     },
