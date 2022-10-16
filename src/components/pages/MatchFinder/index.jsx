@@ -182,13 +182,21 @@ export const MatchFinder = () => {
                 position,
               }))}
             />
-            <MatchesList
-              off={cachedMatches}
-              winners={matches.map((winner, position) => ({
-                ...winner,
-                position,
-              }))}
-            />
+            <Box
+              sx={{
+                width: {
+                  sm: `100%`,
+                },
+              }}
+            >
+              <MatchesList
+                off={cachedMatches}
+                winners={matches.map((winner, position) => ({
+                  ...winner,
+                  position,
+                }))}
+              />
+            </Box>
           </>
         )}
       </Container>

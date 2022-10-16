@@ -91,6 +91,7 @@ export default function MentorCard({ data, percentage }) {
                 fontSize: "2rem",
                 boxSizing: "border-box",
                 height: "auto",
+                width: "min(100%, 250px)",
               }}
               color={getColor(percentage)}
               badgeContent={
