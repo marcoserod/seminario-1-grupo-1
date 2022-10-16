@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -11,13 +10,17 @@ import {
   AccordionSummary,
   Button,
   Checkbox,
+  FormControl,
   FormControlLabel,
   FormGroup,
   Grid,
   InputAdornment,
+  InputLabel,
+  MenuItem,
   Radio,
   RadioGroup,
   Rating,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
@@ -29,6 +32,7 @@ import { SearchOutlined } from "@mui/icons-material";
 import { skills as skillList } from "./helpers";
 import { debounce } from "../../../utils";
 import { ControlledAccordion } from "../../atoms/ControlledAccordion";
+import { FindMyMatchDialog } from "../FindMyMatchDialog";
 
 const drawerWidth = 240;
 
@@ -38,21 +42,23 @@ export const FiltersDrawer = ({
   handleDrawerToggle,
   children,
   handleFiltering,
-  parsedQuery,
 }) => {
   const location = useLocation();
+  const parsedQuery = queryString.parse(location.search);
   const initSkills = parsedQuery.skills;
   const initServices = parsedQuery.services;
   const initRating = parsedQuery.rating;
   const initMinExp = parsedQuery.minExp;
   const initMaxExp = parsedQuery.maxExp;
+  const initSort = parsedQuery.sort;
+
   const parseQueryToState = useCallback((initQuery) => {
     if (initQuery) {
       return typeof initQuery === "string" ? [initQuery] : initQuery;
     }
     return [];
   }, []);
-
+  const [sorting, setSorting] = useState(() => initSort);
   const [skills, setSkills] = useState(parseQueryToState(initSkills));
   const [services, setServices] = useState(parseQueryToState(initServices));
   const [rating, setRating] = useState(initRating || "");
@@ -62,6 +68,7 @@ export const FiltersDrawer = ({
     max: initMaxExp || "",
   });
   const { min, max } = expRange;
+  const [matchModalOpen, setMatchModalOpen] = useState(false);
   const isFiltered = [...skills, ...services, rating, min, max].some(
     (value) => value
   );
@@ -133,8 +140,43 @@ export const FiltersDrawer = ({
     setExpRange((prev) => ({ ...prev, max: value }));
   };
 
+  const handleSort = (e) => {
+    setSorting(e.target.value);
+  };
+
+  const handleMatchModalOpen = () => {
+    setMatchModalOpen((prev) => !prev);
+  };
+
   const drawer = (
     <div>
+      <FindMyMatchDialog
+        open={matchModalOpen}
+        handleClose={handleMatchModalOpen}
+      />
+      <Grid container>
+        <Grid item xs={12} display="flex" alignItems="center">
+          <Button
+            onClick={handleMatchModalOpen}
+            size="large"
+            variant="contained"
+            sx={{
+              fontWeight: "bold",
+
+              margin: "8px auto 0",
+              display: {
+                sm: "unset",
+                xs: "none",
+              },
+            }}
+          >
+            <span>
+              Encontrar mi <span style={{ fontStyle: "italic" }}> MATCH </span>
+            </span>
+          </Button>
+        </Grid>
+      </Grid>
+
       <Toolbar>
         <FilterListIcon />
         <Typography ml={2}>Filtros</Typography>
@@ -358,25 +400,37 @@ export const FiltersDrawer = ({
   );
 
   const handleInnerFiltering = () => {
-    const order = ["q", "skills", "services", "rating"];
+    const order = ["skills", "services", "rating", "sort"];
     const activeFilters = {
       skills,
       services,
       rating: rating || undefined,
       minExp: expRange.min || undefined,
       maxExp: expRange.max || undefined,
+      sort: sorting,
     };
     const query = queryString.stringify(activeFilters, {
       sort: (a, b) => order.indexOf(a) - order.indexOf(b),
     });
-    if (location.search !== query) {
+    if (location.search !== `?${query}`) {
       handleFiltering(query);
     }
   };
 
   useEffect(() => {
     handleInnerFiltering();
-  }, [skills, services, rating, min, max]);
+  }, [skills, services, rating, min, max, sorting]);
+
+  useEffect(() => {
+    setSkills(parseQueryToState(initSkills));
+    setSorting(initSort);
+    setServices(parseQueryToState(initServices));
+    setRating(initRating || "");
+    setExpRange({
+      min: initMinExp || "",
+      max: initMaxExp || "",
+    });
+  }, [location.search]);
 
   return (
     <Box
@@ -435,6 +489,63 @@ export const FiltersDrawer = ({
           {drawer}
         </Drawer>
       </Box>
+
+      <Grid
+        container
+        columnSpacing={2}
+        rowSpacing={2}
+        alignItems="center"
+        sx={{
+          display: "flex",
+          bgcolor: (theme) => theme.palette.background.default,
+          width: "100%",
+          position: "fixed",
+          top: "initial",
+          left: "initial",
+          zIndex: 1000,
+          marginLeft: { xs: "unset", sm: `${drawerWidth}px` },
+        }}
+      >
+        <Grid item xs={12}>
+          <Button
+            onClick={handleMatchModalOpen}
+            variant="contained"
+            sx={{ marginTop: "8px", display: { xs: "unset", sm: "none" } }}
+          >
+            <span>
+              Encontrar mi <span style={{ fontStyle: "italic" }}> MATCH</span>
+            </span>
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="outlined"
+            onClick={handleDrawerToggle}
+            sx={{
+              display: { xs: "flex", sm: "none" },
+              height: "56px",
+              marginTop: "4px",
+            }}
+            startIcon={<FilterListIcon fontSize="small" />}
+          >
+            Filtrar
+          </Button>
+        </Grid>
+        <Grid item>
+          <FormControl margin="dense">
+            <InputLabel id="sort-by">Ordenar por</InputLabel>
+            <Select
+              onChange={handleSort}
+              label="Ordenar por"
+              labelId="sort-by"
+              value={sorting}
+            >
+              <MenuItem value="rating">Mejor calificados</MenuItem>
+              <MenuItem value="id">Más recientes</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
       <Box
         component="main"
         sx={{
@@ -444,18 +555,9 @@ export const FiltersDrawer = ({
             sm: `calc(100% - ${drawerWidth}px)`,
             xs: "calc(100vw - 80px)",
           },
-          margin: "0 1.5rem",
+          margin: { xs: "144px 1.5rem 40px", sm: "100px 1.5rem 40px" },
         }}
       >
-        <IconButton
-          onClick={handleDrawerToggle}
-          sx={{
-            display: { xs: "block", sm: "none" },
-          }}
-          size="large"
-        >
-          <FilterListIcon />
-        </IconButton>
         {children}
       </Box>
     </Box>

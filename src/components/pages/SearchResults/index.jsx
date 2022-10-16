@@ -7,6 +7,7 @@ import queryString from "query-string";
 import { FiltersDrawer } from "../../molecules/Drawer";
 import MentorCard from "../../molecules/MentorCard";
 import { db } from "../../../db/db";
+import { sort } from "../../../utils";
 // import { Loading } from "../../molecules/Loading";
 
 export const SearchResults = () => {
@@ -74,7 +75,7 @@ export const SearchResults = () => {
         (mentor) => mentor.rating >= parsedQuery.rating
       );
     }
-    return filteredData;
+    return sort(filteredData, parsedQuery.sort);
   };
 
   const data = filterData(db.mentors);
@@ -89,7 +90,6 @@ export const SearchResults = () => {
           handleFiltering,
           initialQuery,
           resetQueries,
-          parsedQuery,
         }}
       >
         {parsedQuery.skills && (

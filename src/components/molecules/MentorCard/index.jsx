@@ -7,6 +7,7 @@ import {
 } from "@mui/icons-material";
 import {
   Avatar,
+  Badge,
   Button,
   Card,
   CardActions,
@@ -21,12 +22,27 @@ import { Box, Stack } from "@mui/system";
 
 import { Link } from "react-router-dom";
 
-export default function MentorCard({ data }) {
+export default function MentorCard({ data, percentage }) {
   const StyledCard = styled(Card)`
     border-radius: 1rem;
     border: 1.5px solid #95acff;
     background-color: #eeeeee50;
   `;
+
+  const StyledBadge = styled(Badge)(() => ({
+    "& .MuiBadge-badge": {
+      padding: "4px 8px",
+      height: "auto",
+      fontSize: "1.5rem",
+      borderRadius: "2rem",
+    },
+  }));
+
+  const getColor = (percentage) => {
+    if (percentage >= 70) return "success";
+    if (percentage >= 30) return "warning";
+    return "error";
+  };
 
   return (
     <StyledCard sx={{ minWidth: 275 }} elevation={0}>
@@ -70,17 +86,42 @@ export default function MentorCard({ data }) {
               size="medium"
               precision={0.5}
             />
-            <Avatar
-              src={data.img}
+            <StyledBadge
               sx={{
-                maxWidth: "250px",
-                maxHeight: "250px",
-                width: "100%",
-                height: "100%",
                 fontSize: "2rem",
-                alignSelf: "center",
+                boxSizing: "border-box",
+                height: "auto",
               }}
-            />
+              color={getColor(percentage)}
+              badgeContent={
+                percentage ? (
+                  <span
+                    style={{
+                      padding: "8px 14px",
+                    }}
+                  >
+                    {Math.round(percentage)}%
+                  </span>
+                ) : (
+                  0
+                )
+              }
+              overlap="circular"
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            >
+              <Avatar
+                variant="circular"
+                size={250}
+                src={data.img}
+                sx={{
+                  width: "min(100%, 250px)",
+                  height: "min(100%, 250px)",
+                  fontSize: "2rem",
+                  alignSelf: "center",
+                  objectFit: "cover",
+                }}
+              />
+            </StyledBadge>
           </Box>
           <Box
             sx={{

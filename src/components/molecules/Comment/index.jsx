@@ -34,10 +34,7 @@ export const Comment = ({ review }) => {
               precision={0.5}
             />
             <div>
-              {new Date(review.comment.date).toLocaleDateString(
-                undefined,
-                options
-              )}
+              {new Date(review.comment.date).toLocaleDateString("es", options)}
             </div>
           </Box>
           <p style={{ textAlign: "left" }}>{review.comment.message}</p>

@@ -24,7 +24,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box, Container, Stack } from "@mui/system";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 
 import { db } from "../../../db/db";
@@ -42,6 +42,10 @@ export const MentorDetail = () => {
       behavior: "smooth",
     });
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Box paddingBottom="10rem">

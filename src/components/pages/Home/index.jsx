@@ -42,7 +42,7 @@ export const Home = () => {
   const navigateTo = useNavigate();
 
   const handleRedirect = () => {
-    navigateTo("/mentor/search");
+    navigateTo("/mentor/search?sort=rating");
   };
 
   return (
