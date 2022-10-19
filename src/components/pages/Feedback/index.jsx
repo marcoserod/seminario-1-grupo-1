@@ -36,7 +36,6 @@ export const SendFeedback = () => {
           multiline
           minRows={5}
         />
-        <Box data-netlify-recaptcha="true" />
         <Button
           type="submit"
           fullWidth
