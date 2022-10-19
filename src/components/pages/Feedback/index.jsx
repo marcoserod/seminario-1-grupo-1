@@ -16,14 +16,7 @@ export const SendFeedback = () => {
       <Typography variant="h5" gutterBottom alignSelf="center">
         ¿Cómo podemos mejorar?
       </Typography>
-      <Box
-        id="feedback"
-        name="feedback"
-        component="form"
-        noValidate
-        action="POST"
-        data-netlify="true"
-      >
+      <form name="feedback" method="POST" data-netlify="true">
         <input type="hidden" name="form-name" value="feedback" />
         <TextField
           margin="dense"
@@ -52,7 +45,7 @@ export const SendFeedback = () => {
         >
           Enviar
         </Button>
-      </Box>
+      </form>
     </Container>
   );
 };
