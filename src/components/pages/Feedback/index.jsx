@@ -1,8 +1,16 @@
-import { Button, TextField, Typography } from "@mui/material";
-import { Box, Container } from "@mui/system";
-import React from "react";
+import { Alert, Button, TextField, Typography } from "@mui/material";
+import { Container } from "@mui/system";
+import React, { useEffect, useState } from "react";
 
 export const SendFeedback = () => {
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    if (window.location.search.includes("success=true")) {
+      setSuccess(true);
+    }
+  }, []);
+
   return (
     <Container
       component="main"
@@ -13,10 +21,20 @@ export const SendFeedback = () => {
         flexDirection: "column",
       }}
     >
-      <Typography variant="h5" gutterBottom alignSelf="center">
+      {success && (
+        <Alert severity="success" sx={{ mb: 3 }}>
+          ¡Gracias por ayudarnos a mejorar!🙂{" "}
+        </Alert>
+      )}
+      <Typography variant="h5" gutterBottom alignSelf="center" color="primary">
         ¿Cómo podemos mejorar?
       </Typography>
-      <form name="feedback" method="POST" data-netlify="true">
+      <form
+        name="feedback"
+        method="POST"
+        data-netlify="true"
+        action="/feedback/?success=true"
+      >
         <input type="hidden" name="form-name" value="feedback" />
         <TextField
           margin="dense"
