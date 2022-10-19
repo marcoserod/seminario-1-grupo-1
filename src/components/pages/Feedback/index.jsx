@@ -18,11 +18,13 @@ export const SendFeedback = () => {
       </Typography>
       <Box
         id="feedback"
+        name="feedback"
         component="form"
         noValidate
         action="POST"
         data-netlify="true"
       >
+        <input type="hidden" name="form-name" value="feedback" />
         <TextField
           margin="dense"
           name="name"
@@ -41,6 +43,7 @@ export const SendFeedback = () => {
           multiline
           minRows={5}
         />
+        <Box data-netlify-recaptcha="true" />
         <Button
           type="submit"
           fullWidth
@@ -49,7 +52,6 @@ export const SendFeedback = () => {
         >
           Enviar
         </Button>
-        <Box data-netlify-recaptcha="true" />
       </Box>
     </Container>
   );
