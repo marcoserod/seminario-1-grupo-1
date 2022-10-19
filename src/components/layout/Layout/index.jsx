@@ -5,8 +5,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Container from "@mui/material/Container";
 import { cloneElement } from "react";
-import { Link } from "@mui/material";
+import { Button, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import { Box } from "@mui/system";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -44,6 +45,15 @@ export default function Layout(props) {
                   <span style={{ fontStyle: "italic" }}>e</span>
                   <span style={{ fontWeight: "bold" }}>AR</span>
                 </Typography>
+              </Link>
+              <Box sx={{ flexGrow: 1 }} />
+              <Link
+                underline="hover"
+                component={RouterLink}
+                to="/feedback/"
+                sx={{ color: "unset" }}
+              >
+                FEEDBACK
               </Link>
             </Toolbar>
           </Container>

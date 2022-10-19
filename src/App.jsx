@@ -6,6 +6,7 @@ import Layout from "./components/layout/Layout";
 import { SearchResults } from "./components/pages/SearchResults";
 import { MentorDetail } from "./components/pages/MentorDetail";
 import { MatchFinder } from "./components/pages/MatchFinder";
+import { SendFeedback } from "./components/pages/Feedback";
 
 function App() {
   const theme = createTheme({
@@ -37,6 +38,7 @@ function App() {
               <Route path="/mentor/match" element={<MatchFinder />} />
               <Route path="/mentor/search" element={<SearchResults />} />
               <Route path="/mentor/:mentorID" element={<MentorDetail />} />
+              <Route path="/feedback/" element={<SendFeedback />} />
             </Routes>
           </Layout>
         </BrowserRouter>

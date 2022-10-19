@@ -17,7 +17,7 @@ export const FindMyMatchDialog = ({ open, handleClose }) => {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        Que es encontrar mi match? 🤔
+        ¿Qué es encontrar mi match? 🤔
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
