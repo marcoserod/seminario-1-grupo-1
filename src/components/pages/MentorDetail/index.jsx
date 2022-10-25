@@ -35,6 +35,11 @@ import medium from "../../../assets/medium.webp";
 export const MentorDetail = () => {
   const { mentorID } = useParams();
   const data = db.mentors.find((mentor) => mentor.id.toString() === mentorID);
+  const mentees = data.mentees.map((id) => {
+    return db.mentees.find((mentee) => {
+      return mentee.id === id;
+    });
+  });
   const skillRef = useRef(null);
 
   const handleGoToSkills = () => {
@@ -190,6 +195,28 @@ export const MentorDetail = () => {
             <Typography variant="body1" gutterBottom>
               {data.description}
             </Typography>
+          </AccordionDetails>
+        </Accordion>
+      </Container>
+      <Container>
+        <Accordion defaultExpanded elevation={0}>
+          <AccordionSummary
+            expandIcon={<ExpandMore />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography color="primary" variant="h6" sx={{ fontWeight: 600 }}>
+              Mentees
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={1}>
+              {mentees.map((m) => (
+                <Grid item>
+                  <Avatar alt="Remy Sharp" src={m.img} />
+                </Grid>
+              ))}
+            </Grid>
           </AccordionDetails>
         </Accordion>
       </Container>
