@@ -5,12 +5,14 @@ import {
   LinkedIn,
   MailOutline,
   OfflineBoltOutlined,
+  ThumbUpAltRounded,
 } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Avatar,
+  Badge,
   Card,
   CardContent,
   CardMedia,
@@ -31,6 +33,7 @@ import { db } from "../../../db/db";
 import { Comment } from "../../molecules/Comment";
 import mentorApp from "../../../assets/MentorearAPP.avif";
 import medium from "../../../assets/medium.webp";
+import certificate from "../../../assets/certificate.jpg";
 
 export const MentorDetail = () => {
   const { mentorID } = useParams();
@@ -54,19 +57,44 @@ export const MentorDetail = () => {
           backgroundImage: (theme) => theme.palette.primary.mainGradient,
         }}
       >
-        <Container sx={{ display: "flex" }}>
-          <Avatar
-            src={data.img}
-            sx={{
-              maxWidth: "180px",
-              maxHeight: "180px",
-              width: "100%",
-              height: "100%",
-              fontSize: "2rem",
-              alignSelf: "center",
-              transform: "translateY(3rem)",
-            }}
-          />
+        <Container sx={{ display: "flex" }} maxWidth="false">
+          <Badge
+            badgeContent={
+              data.recommended ? (
+                <Chip
+                  sx={{
+                    transform: "translateY(3rem)",
+                  }}
+                  component="span"
+                  label={
+                    <Box display="flex" alignItems="center">
+                      <ThumbUpAltRounded sx={{ mr: 1 }} />
+                      Recomendado
+                    </Box>
+                  }
+                  color="primary"
+                  variant="filled"
+                />
+              ) : (
+                0
+              )
+            }
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          >
+            <Avatar
+              src={data.img}
+              sx={{
+                maxWidth: "180px",
+                maxHeight: "180px",
+                width: "100%",
+                height: "100%",
+                fontSize: "2rem",
+                alignSelf: "center",
+                transform: "translateY(3rem)",
+              }}
+            />
+          </Badge>
           <Box sx={{ flexGrow: 1 }} />
           <Box alignSelf="flex-end">
             <IconButton
@@ -86,7 +114,7 @@ export const MentorDetail = () => {
           </Box>
         </Container>
       </Box>
-      <Container sx={{ marginTop: "4rem" }}>
+      <Container sx={{ marginTop: "4rem" }} maxWidth="false">
         <Grid container>
           <Grid item xs={12} md={8}>
             <Stack>
@@ -175,7 +203,7 @@ export const MentorDetail = () => {
         </Grid>
       </Container>
       <Divider sx={{ mb: 1, mt: 1 }} />
-      <Container>
+      <Container maxWidth="false">
         <Accordion defaultExpanded elevation={0}>
           <AccordionSummary
             expandIcon={<ExpandMore />}
@@ -193,7 +221,7 @@ export const MentorDetail = () => {
           </AccordionDetails>
         </Accordion>
       </Container>
-      <Container>
+      <Container maxWidth="false">
         <Accordion defaultExpanded elevation={0}>
           <AccordionSummary
             expandIcon={<ExpandMore />}
@@ -213,7 +241,7 @@ export const MentorDetail = () => {
           </AccordionDetails>
         </Accordion>
       </Container>
-      <Container>
+      <Container maxWidth="false">
         <Accordion defaultExpanded elevation={0} ref={skillRef}>
           <AccordionSummary
             expandIcon={<ExpandMore />}
@@ -235,7 +263,42 @@ export const MentorDetail = () => {
           </AccordionDetails>
         </Accordion>
       </Container>
-      <Container>
+      <Container maxWidth="false">
+        <Accordion defaultExpanded elevation={0}>
+          <AccordionSummary
+            expandIcon={<ExpandMore />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography color="primary" variant="h6" sx={{ fontWeight: 600 }}>
+              Certificaciones
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={1}>
+              <Grid item key="cert">
+                <Card sx={{ maxWidth: 300 }}>
+                  <CardMedia
+                    component="img"
+                    height="150px"
+                    src={certificate}
+                    alt="green iguana"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {data.skills[0]}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Certificado en {data.skills[0]} de {data.name}.
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+      </Container>
+      <Container maxWidth="false">
         <Accordion defaultExpanded elevation={0}>
           <AccordionSummary
             expandIcon={<ExpandMore />}

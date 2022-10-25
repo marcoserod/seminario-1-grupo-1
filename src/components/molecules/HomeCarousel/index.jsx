@@ -170,39 +170,11 @@ export const HomeCarousel = () => {
   ];
 
   return (
-    // <ReactElasticCarousel
-    //   itemsToShow={1}
-    //   autoPlaySpeed={5000}
-    //   ref={carouselRef}
-    //   onNextEnd={({ index }) => {
-    //     if (index === carouselItems.length - 1) {
-    //       clearTimeout(resetTimeout);
-    //       resetTimeout = setTimeout(() => {
-    //         carouselRef?.current?.goTo(0);
-    //       }, 5000);
-    //     }
-    //   }}
-    // >
-    //   {carouselItems.map((item, index) => (
-    //     <Container
-    //       disableGutters
-    //       sx={{
-    //         display: "flex",
-    //         minHeight: "calc(100vh - 500px)",
-    //         justifyContent: "space-around",
-    //         alignContent: "center",
-    //       }}
-    //       // eslint-disable-next-line react/no-array-index-key
-    //       key={index}
-    //     >
-    //       {item}
-    //     </Container>
-    //   ))}
-    // </ReactElasticCarousel>
     <Carousel>
       {carouselItems.map((item, index) => (
         <Container
           disableGutters
+          maxWidth="false"
           sx={{
             display: "flex",
             minHeight: "calc(100vh - 500px)",

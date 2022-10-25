@@ -275,7 +275,7 @@ export const LoadingMatch = ({ isLoading }) => {
       open={isLoading}
       sx={{
         color: (theme) => theme.palette.primary.main,
-        zIndex: (theme) => theme.zIndex.drawer + 1,
+        zIndex: (theme) => theme.zIndex.drawer - 1,
         backdropFilter: "blur(5px)",
         backgroundColor: "#FFFFFF10",
       }}

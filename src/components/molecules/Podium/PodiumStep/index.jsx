@@ -30,7 +30,7 @@ export default function PodiumStep({ podium, winner, off }) {
           hidden: { opacity: 0 },
         }}
       >
-        <Avatar src={winner.mentor.img} />
+        <Avatar src={winner.img} />
       </motion.div>
 
       <motion.div
@@ -49,7 +49,7 @@ export default function PodiumStep({ podium, winner, off }) {
         animate="visible"
         variants={{
           visible: {
-            height: 200 * (offset / podium.length),
+            height: 150 * (offset / podium.length),
             opacity: 1,
             transition: {
               delay: 1 + offset,

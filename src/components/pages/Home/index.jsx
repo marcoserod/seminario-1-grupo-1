@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as Logo } from "../../../../public/mentor.svg";
+import { ReactComponent as Logo } from "../../../assets/SShipLogo.svg";
 
 import { Button } from "../../atoms/Button";
 import { HomeCarousel } from "../../molecules/HomeCarousel";
@@ -42,7 +42,7 @@ export const Home = () => {
   const navigateTo = useNavigate();
 
   const handleRedirect = () => {
-    navigateTo("/mentor/search?sort=rating");
+    navigateTo("/mentor/search?sort=recommended&view=list&qtyView=1");
   };
 
   return (
@@ -119,7 +119,9 @@ export const Home = () => {
         </Container>
       </Box>
       <StyledBox>
-        <HomeCarousel />
+        <Container>
+          <HomeCarousel />
+        </Container>
       </StyledBox>
     </>
   );

@@ -4,6 +4,7 @@ import {
   ChatOutlined,
   MailOutline,
   OfflineBoltOutlined,
+  ThumbUpAltRounded,
 } from "@mui/icons-material";
 import {
   Avatar,
@@ -15,14 +16,29 @@ import {
   Chip,
   Divider,
   Grid,
+  IconButton,
   Rating,
   Typography,
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
+import { useState } from "react";
 
 import { Link } from "react-router-dom";
+import { PercentageDetail } from "../../pages/MatchFinder/PercentageDetail";
 
-export default function MentorCard({ data, percentage }) {
+export default function MentorCard({
+  data,
+  percentage,
+  view,
+  matchedSkills,
+  unmatchedSkills,
+}) {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen((prev) => !prev);
+  };
+
   const StyledCard = styled(Card)`
     border-radius: 1rem;
     border: 1.5px solid #95acff;
@@ -45,20 +61,41 @@ export default function MentorCard({ data, percentage }) {
   };
 
   return (
-    <StyledCard sx={{ minWidth: 275 }} elevation={0}>
+    <StyledCard
+      sx={{
+        minWidth: 275,
+        maxWidth: { xs: "unset", md: view === "column" ? 330 : "unset" },
+      }}
+      elevation={0}
+    >
+      <PercentageDetail
+        open={open}
+        handleClose={handleOpen}
+        matchedSkills={matchedSkills}
+        unmatchedSkills={unmatchedSkills}
+        name={data.name}
+      />
       <CardContent>
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 30% 50% 20%)",
+            gridTemplateColumns: "repeat(3, 20% 50% 30%)",
             gap: 1,
             gridTemplateRows: "100px auto auto ",
             gridTemplateAreas: {
-              md: `
+              md:
+                view === "list"
+                  ? `
                 "sider main  services"
                 "sider main  services"
                 "sider main  services"
-                `,
+                `
+                  : `
+                "sider sider sider"
+                "sider sider sider"
+                "main main main"
+                "main main main"
+                  `,
               xs: `
               "sider sider sider"
               "sider sider sider"
@@ -86,43 +123,83 @@ export default function MentorCard({ data, percentage }) {
               size="medium"
               precision={0.5}
             />
-            <StyledBadge
-              sx={{
-                fontSize: "2rem",
-                boxSizing: "border-box",
-                height: "auto",
-                width: "min(100%, 250px)",
-              }}
-              color={getColor(percentage)}
-              badgeContent={
-                percentage ? (
-                  <span
-                    style={{
-                      padding: "8px 14px",
-                    }}
-                  >
-                    {Math.round(percentage)}%
-                  </span>
-                ) : (
-                  0
-                )
-              }
-              overlap="circular"
-              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            >
-              <Avatar
-                variant="circular"
-                size={250}
-                src={data.img}
+            {matchedSkills ? (
+              <IconButton
+                onClick={handleOpen}
                 sx={{
-                  width: "min(100%, 250px)",
-                  height: "min(100%, 250px)",
-                  fontSize: "2rem",
-                  alignSelf: "center",
-                  objectFit: "cover",
+                  height: "auto",
+                  width: "min(100%, 200px)",
+                  "&:hover": {
+                    backgroundColor: (theme) => theme.palette.primary.light,
+                  },
                 }}
+              >
+                <StyledBadge
+                  sx={{
+                    fontSize: "2rem",
+                    boxSizing: "border-box",
+                    height: "auto",
+                    width: "min(100%, 200px)",
+                  }}
+                  color={getColor(percentage)}
+                  badgeContent={
+                    percentage ? (
+                      <span
+                        style={{
+                          padding: "8px 14px",
+                        }}
+                      >
+                        {Math.round(percentage)}%
+                      </span>
+                    ) : (
+                      0
+                    )
+                  }
+                  overlap="circular"
+                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                >
+                  <Avatar
+                    variant="circular"
+                    src={data.img}
+                    sx={{
+                      width: "min(100%, 200px)",
+                      height: "min(100%, 200px)",
+                      fontSize: "2rem",
+                      alignSelf: "center",
+                      objectFit: "cover",
+                    }}
+                  />
+                </StyledBadge>
+              </IconButton>
+            ) : (
+              <Box sx={{ height: "auto", width: "min(100%, 200px)" }}>
+                <Avatar
+                  variant="circular"
+                  src={data.img}
+                  sx={{
+                    width: "min(100%, 200px)",
+                    height: "min(100%, 200px)",
+                    fontSize: "2rem",
+                    alignSelf: "center",
+                    objectFit: "cover",
+                  }}
+                />
+              </Box>
+            )}
+            {data.recommended && (
+              <Chip
+                sx={{ mt: 1 }}
+                component="span"
+                label={
+                  <Box display="flex" alignItems="center">
+                    <ThumbUpAltRounded sx={{ mr: 1 }} />
+                    Recomendado
+                  </Box>
+                }
+                color="primary"
+                variant="outlined"
               />
-            </StyledBadge>
+            )}
           </Box>
           <Box
             sx={{
@@ -155,7 +232,7 @@ export default function MentorCard({ data, percentage }) {
                   overflowY: "hidden",
                   textOverflow: "ellipsis",
                   display: "-webkit-box",
-                  WebkitLineClamp: 4,
+                  WebkitLineClamp: 3,
                   WebkitBoxOrient: "vertical",
                 }}
               >
@@ -182,7 +259,7 @@ export default function MentorCard({ data, percentage }) {
           <Box
             sx={{
               gridArea: "services",
-              display: { xs: "none", md: "unset" },
+              display: { xs: "none", md: view === "list" ? "unset" : "none" },
             }}
           >
             <Stack>

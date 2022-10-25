@@ -18,6 +18,7 @@ export const SearchResults = () => {
   const location = useLocation();
   const parsedQuery = queryString.parse(location.search);
   const resetQueries = location.state?.resetQueries;
+  const { view, qtyView } = parsedQuery;
 
   const navigateTo = useNavigate();
   const handleFiltering = useCallback((querySearch) => {
@@ -75,13 +76,28 @@ export const SearchResults = () => {
         (mentor) => mentor.rating >= parsedQuery.rating
       );
     }
-    return sort(filteredData, parsedQuery.sort);
+
+    const sortedData = sort(
+      filteredData,
+      parsedQuery.sort === "recommended" ? "rating" : parsedQuery.sort
+    );
+
+    if (parsedQuery.sort === "recommended") {
+      const recommended = sortedData.filter((mentor) => mentor.recommended);
+      const notRecommended = sortedData.filter((mentor) => !mentor.recommended);
+      return [...recommended, ...notRecommended];
+    }
+    return sortedData;
   };
 
   const data = filterData(db.mentors);
 
   return (
-    <Container ref={container} style={{ position: "relative" }}>
+    <Container
+      ref={container}
+      style={{ position: "relative" }}
+      maxWidth="false"
+    >
       <FiltersDrawer
         {...{
           container,
@@ -123,8 +139,16 @@ export const SearchResults = () => {
         >
           {data.length ? (
             data.map((mentor) => (
-              <Grid key={mentor.id} item mb={1} xs={12}>
-                <MentorCard data={mentor} />
+              <Grid
+                key={mentor.id}
+                item
+                mb={1}
+                lg={view === "list" ? 12 / qtyView : "auto"}
+                md={view === "list" ? 12 : "auto"}
+                xs={12}
+                sx={{ display: "flex" }}
+              >
+                <MentorCard data={mentor} view={view} />
               </Grid>
             ))
           ) : (

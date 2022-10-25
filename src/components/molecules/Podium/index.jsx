@@ -17,16 +17,11 @@ export default function Podium({ winners, off }) {
         alignContent: "flex-end",
         alignItems: "flex-end",
         borderBottom: "1px solid #e5e7eb",
-        height: 250,
+        height: 200,
       }}
     >
       {podium.map((winner) => (
-        <PodiumStep
-          key={winner.mentor.id}
-          podium={podium}
-          winner={winner}
-          off={off}
-        />
+        <PodiumStep key={winner.id} podium={podium} winner={winner} off={off} />
       ))}
     </div>
   );

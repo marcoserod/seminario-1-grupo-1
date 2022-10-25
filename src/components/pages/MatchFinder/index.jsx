@@ -1,4 +1,9 @@
-import { ChevronLeft, ExpandMore } from "@mui/icons-material";
+import {
+  ChevronLeft,
+  ExpandMore,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
@@ -13,7 +18,7 @@ import {
   Button,
 } from "@mui/material";
 import { Box, Container } from "@mui/system";
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../../db/db";
 import { sort } from "../../../utils";
@@ -21,6 +26,7 @@ import { Storage } from "../../../utils/Storage";
 import MatchesList from "../../molecules/MatchesList";
 import Podium from "../../molecules/Podium";
 import { LoadingMatch } from "./LoadingMatch";
+import { FiltersDrawer } from "../../molecules/Drawer";
 
 const options = {
   weekday: "long",
@@ -48,20 +54,42 @@ export const MatchFinder = () => {
     "Agile",
   ]);
   const [isMatching, setIsMatching] = useState(false);
+  const container = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [showFiltersForMatch, setFiltersForMatch] = useState(false);
+
+  const handleFiltering = useCallback((querySearch) => {
+    const newLocation = {
+      pathname: "/mentor/match",
+      search: querySearch,
+    };
+    navigateTo(newLocation);
+  }, []);
+
+  const handleDrawerToggle = useCallback(() => {
+    setIsOpen(!isOpen);
+  }, [isOpen]);
 
   const handleGoBack = () => {
-    navigateTo(-1);
+    navigateTo("/mentor/search?sort=recommended&view=list&qtyView=1");
   };
 
   const countMatchesByMentor = (mentor) => {
     let matches = 0;
+    const matchedSkills = [];
+    const unmatchedSkills = [];
     interests.forEach((interest) => {
       if (mentor.skills.find((skill) => skill === interest)) {
         matches += 1;
+        matchedSkills.push(interest);
+      } else {
+        unmatchedSkills.push(interest);
       }
     });
     return {
-      mentor,
+      ...mentor,
+      matchedSkills,
+      unmatchedSkills,
       matches,
       percentage: (matches * 100) / interests.length,
     };
@@ -81,6 +109,7 @@ export const MatchFinder = () => {
     if (endTime - startTime < 1000) {
       setTimeout(() => setIsMatching(false), 2000);
     }
+    console.log(result);
     setMatches(result);
     setTimeout(() => setChachedMatches(result), 10000);
     return result;
@@ -96,7 +125,7 @@ export const MatchFinder = () => {
       <Box
         sx={{
           backgroundImage: (theme) => theme.palette.primary.mainGradient,
-          zIndex: (theme) => theme.zIndex.drawer + 1,
+          zIndex: (theme) => theme.zIndex.drawer - 1,
           position: "fixed",
           width: "100%",
           pt: 1,
@@ -104,6 +133,7 @@ export const MatchFinder = () => {
         }}
       >
         <Container
+          maxWidth="false"
           sx={{
             display: "flex",
             alignItems: "center",
@@ -119,7 +149,10 @@ export const MatchFinder = () => {
         </Container>
       </Box>
       <Toolbar sx={{ pointerEvents: "none" }} />
-      <Container sx={{ display: "flex", flexDirection: "column" }}>
+      <Container
+        sx={{ display: "flex", flexDirection: "column" }}
+        maxWidth="false"
+      >
         {!matches ? (
           <>
             <Accordion defaultExpanded elevation={0}>
@@ -166,38 +199,73 @@ export const MatchFinder = () => {
         ) : null}
         <LoadingMatch isLoading={isMatching} />
         {matches && (
-          <>
-            <Box display="flex">
-              <Typography>
-                Tu resultado del día:{" "}
-                {new Date().toLocaleDateString("es", options)}
-              </Typography>
-              <Box sx={{ flexGrow: 1 }} />
-              <Button onClick={handleRetry}>Volver a buscar</Button>
-            </Box>
-            <Podium
-              off={cachedMatches}
-              winners={matches.map((winner, position) => ({
-                ...winner,
-                position,
-              }))}
-            />
-            <Box
-              sx={{
-                width: {
-                  sm: `100%`,
-                },
+          <Container
+            ref={container}
+            style={{ position: "relative" }}
+            maxWidth="false"
+          >
+            <FiltersDrawer
+              {...{
+                container,
+                isOpen,
+                handleDrawerToggle,
+                handleFiltering,
+                showFiltersForMatch,
+                interests,
               }}
             >
-              <MatchesList
-                off={cachedMatches}
-                winners={matches.map((winner, position) => ({
-                  ...winner,
-                  position,
-                }))}
-              />
-            </Box>
-          </>
+              <Grid container alignItems="center">
+                <Grid item>
+                  <Typography>
+                    Tu resultado del día:{" "}
+                    {new Date().toLocaleDateString("es", options)}
+                  </Typography>
+                </Grid>
+                <Grid item sx={{ marginLeft: "auto" }}>
+                  {!showFiltersForMatch ? (
+                    <Button
+                      onClick={() => setFiltersForMatch(true)}
+                      startIcon={<Visibility fontSize="small" />}
+                    >
+                      Ver Filtros
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => setFiltersForMatch(false)}
+                      startIcon={<VisibilityOff fontSize="small" />}
+                    >
+                      Ocultar Filtros
+                    </Button>
+                  )}
+                  <Button onClick={handleRetry}>Volver a buscar</Button>
+                </Grid>
+              </Grid>
+              {!showFiltersForMatch && (
+                <Podium
+                  off={cachedMatches}
+                  winners={matches.map((winner, position) => ({
+                    ...winner,
+                    position,
+                  }))}
+                />
+              )}
+              <Box
+                sx={{
+                  width: {
+                    sm: `100%`,
+                  },
+                }}
+              >
+                <MatchesList
+                  off={cachedMatches}
+                  winners={matches.map((winner, position) => ({
+                    ...winner,
+                    position,
+                  }))}
+                />
+              </Box>
+            </FiltersDrawer>
+          </Container>
         )}
       </Container>
     </>

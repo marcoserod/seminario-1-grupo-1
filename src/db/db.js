@@ -67,6 +67,7 @@ export const db = {
     {
       id: 1,
       name: "Thiago Carpintero",
+      recommended: true,
       jobTitle: "Team Lead",
       jobCompany: "Stripe",
       skills: [

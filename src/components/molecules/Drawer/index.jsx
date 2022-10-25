@@ -16,6 +16,8 @@ import {
   Grid,
   InputAdornment,
   InputLabel,
+  ListItemIcon,
+  ListItemText,
   MenuItem,
   Radio,
   RadioGroup,
@@ -27,8 +29,7 @@ import {
 import { useEffect, useState, useCallback } from "react";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
-
-import { SearchOutlined } from "@mui/icons-material";
+import { SearchOutlined, ViewColumn, ViewList } from "@mui/icons-material";
 import { skills as skillList } from "./helpers";
 import { debounce } from "../../../utils";
 import { ControlledAccordion } from "../../atoms/ControlledAccordion";
@@ -42,8 +43,12 @@ export const FiltersDrawer = ({
   handleDrawerToggle,
   children,
   handleFiltering,
+  showFiltersForMatch,
+  interests,
 }) => {
   const location = useLocation();
+  const isMatch = location.pathname === "/mentor/match";
+  const displayFilters = !showFiltersForMatch ? "none" : "unset";
   const parsedQuery = queryString.parse(location.search);
   const initSkills = parsedQuery.skills;
   const initServices = parsedQuery.services;
@@ -51,6 +56,9 @@ export const FiltersDrawer = ({
   const initMinExp = parsedQuery.minExp;
   const initMaxExp = parsedQuery.maxExp;
   const initSort = parsedQuery.sort;
+  const initView = parsedQuery.view;
+  const initQtyView = parsedQuery.qtyView || 1;
+  const displaySkillList = isMatch ? interests : skillList;
 
   const parseQueryToState = useCallback((initQuery) => {
     if (initQuery) {
@@ -69,6 +77,8 @@ export const FiltersDrawer = ({
   });
   const { min, max } = expRange;
   const [matchModalOpen, setMatchModalOpen] = useState(false);
+  const [view, setView] = useState(initView);
+  const [qtyView, setQtyView] = useState(initQtyView);
   const isFiltered = [...skills, ...services, rating, min, max].some(
     (value) => value
   );
@@ -123,7 +133,7 @@ export const FiltersDrawer = ({
     setSkillSearch(value);
   };
 
-  const filteredSkills = skillList.filter((skill) =>
+  const filteredSkills = displaySkillList.filter((skill) =>
     skill.toLowerCase().includes(skillSearch.toLowerCase())
   );
 
@@ -144,6 +154,12 @@ export const FiltersDrawer = ({
     setSorting(e.target.value);
   };
 
+  const handleView = (e) => {
+    setView(e.target.value);
+  };
+  const handleQtyView = (e) => {
+    setQtyView(e.target.value);
+  };
   const handleMatchModalOpen = () => {
     setMatchModalOpen((prev) => !prev);
   };
@@ -165,7 +181,7 @@ export const FiltersDrawer = ({
 
               margin: "8px auto 0",
               display: {
-                sm: "unset",
+                sm: !isMatch ? "unset" : "none",
                 xs: "none",
               },
             }}
@@ -246,8 +262,22 @@ export const FiltersDrawer = ({
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
         >
-          <Typography>Experiencia</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Typography>Experiencia</Typography>
+            <Typography variant="caption" ml={1}>
+              (en años)
+            </Typography>
+          </Box>
         </AccordionSummary>
         <AccordionDetails>
           <Grid container spacing={1}>
@@ -400,7 +430,7 @@ export const FiltersDrawer = ({
   );
 
   const handleInnerFiltering = () => {
-    const order = ["skills", "services", "rating", "sort"];
+    const order = ["skills", "services", "rating", "sort", "view", "qtyView"];
     const activeFilters = {
       skills,
       services,
@@ -408,6 +438,8 @@ export const FiltersDrawer = ({
       minExp: expRange.min || undefined,
       maxExp: expRange.max || undefined,
       sort: sorting,
+      view,
+      qtyView,
     };
     const query = queryString.stringify(activeFilters, {
       sort: (a, b) => order.indexOf(a) - order.indexOf(b),
@@ -419,7 +451,7 @@ export const FiltersDrawer = ({
 
   useEffect(() => {
     handleInnerFiltering();
-  }, [skills, services, rating, min, max, sorting]);
+  }, [skills, services, rating, min, max, sorting, view, qtyView]);
 
   useEffect(() => {
     setSkills(parseQueryToState(initSkills));
@@ -430,6 +462,8 @@ export const FiltersDrawer = ({
       min: initMinExp || "",
       max: initMaxExp || "",
     });
+    setView(initView);
+    setQtyView(qtyView);
   }, [location.search]);
 
   return (
@@ -439,7 +473,13 @@ export const FiltersDrawer = ({
     >
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{
+          width: {
+            // eslint-disable-next-line no-nested-ternary
+            sm: !isMatch ? drawerWidth : showFiltersForMatch ? drawerWidth : 0,
+          },
+          flexShrink: { sm: 0 },
+        }}
         aria-label="mailbox folders"
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -471,14 +511,15 @@ export const FiltersDrawer = ({
               top: "initial",
               left: "initial",
               zIndex: 1000,
-              paddingBottom: "80px",
+              paddingBottom: isMatch ? "160px" : "80px",
+              height: "100%",
             },
           }}
           BackdropProps={{ style: { position: "absolute" } }}
           container={container.current}
           variant="permanent"
           sx={{
-            display: { xs: "none", sm: "block" },
+            display: { xs: "none", sm: !isMatch ? "block" : displayFilters },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
@@ -489,28 +530,34 @@ export const FiltersDrawer = ({
           {drawer}
         </Drawer>
       </Box>
-
       <Grid
         container
         columnSpacing={2}
         rowSpacing={2}
         alignItems="center"
         sx={{
-          display: "flex",
+          // eslint-disable-next-line no-nested-ternary
+          display: !isMatch ? "flex" : showFiltersForMatch ? "flex" : "none",
           bgcolor: (theme) => theme.palette.background.default,
           width: "100%",
           position: "fixed",
           top: "initial",
           left: "initial",
           zIndex: 1000,
-          marginLeft: { xs: "unset", sm: `${drawerWidth}px` },
+          marginLeft: {
+            xs: "unset",
+            sm: isMatch && !showFiltersForMatch ? "none" : `${drawerWidth}px`,
+          },
         }}
       >
         <Grid item xs={12}>
           <Button
             onClick={handleMatchModalOpen}
             variant="contained"
-            sx={{ marginTop: "8px", display: { xs: "unset", sm: "none" } }}
+            sx={{
+              marginTop: "8px",
+              display: { xs: isMatch ? "none" : "unset", sm: "none" },
+            }}
           >
             <span>
               Encontrar mi <span style={{ fontStyle: "italic" }}> MATCH</span>
@@ -539,9 +586,73 @@ export const FiltersDrawer = ({
               label="Ordenar por"
               labelId="sort-by"
               value={sorting}
+              defaultValue={isMatch ? "percentage" : "rating"}
             >
-              <MenuItem value="rating">Mejor calificados</MenuItem>
-              <MenuItem value="id">Más recientes</MenuItem>
+              {isMatch && (
+                <MenuItem value="percentage">
+                  <ListItemText>Mayor porcentaje</ListItemText>
+                </MenuItem>
+              )}
+              <MenuItem value="recommended">
+                <ListItemText>Recomendados</ListItemText>
+              </MenuItem>
+              <MenuItem value="rating">
+                <ListItemText>Mejor calificados</ListItemText>
+              </MenuItem>
+              <MenuItem value="id">
+                <ListItemText>Más recientes</ListItemText>
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid
+          item
+          sx={{
+            display: { xs: "none", md: "unset" },
+          }}
+        >
+          <FormControl margin="dense">
+            <InputLabel id="see-as">Ver como</InputLabel>
+            <Select
+              onChange={handleView}
+              label="Ver como"
+              labelId="see-as"
+              value={view}
+              defaultValue="list"
+            >
+              <MenuItem value="list">
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItemIcon sx={{ minWidth: "2rem" }}>
+                    <ViewList />
+                  </ListItemIcon>
+                  <ListItemText>Lista </ListItemText>
+                </Box>
+              </MenuItem>
+              <MenuItem value="column">
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItemIcon sx={{ minWidth: "2rem" }}>
+                    <ViewColumn />
+                  </ListItemIcon>
+                  <ListItemText>Columna </ListItemText>
+                </Box>
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid
+          item
+          sx={{
+            display: { xs: "none", lg: view === "list" ? "unset" : "none" },
+          }}
+        >
+          <FormControl margin="dense">
+            <Select onChange={handleQtyView} labelId="qty" value={qtyView}>
+              <MenuItem value={1}>
+                <ListItemText>x1</ListItemText>
+              </MenuItem>
+              <MenuItem value={2}>
+                <ListItemText>x2</ListItemText>
+              </MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -552,10 +663,28 @@ export const FiltersDrawer = ({
           flexShrink: { sm: 0 },
           flexGrow: 1,
           width: {
-            sm: `calc(100% - ${drawerWidth}px)`,
+            // eslint-disable-next-line no-nested-ternary
+            sm: !isMatch
+              ? `calc(100% - ${drawerWidth}px)`
+              : showFiltersForMatch
+              ? `calc(100% - ${drawerWidth}px)`
+              : "calc(100vw - 80px)",
             xs: "calc(100vw - 80px)",
           },
-          margin: { xs: "144px 1.5rem 40px", sm: "100px 1.5rem 40px" },
+          margin: {
+            // eslint-disable-next-line no-nested-ternary
+            xs: !isMatch
+              ? "144px 1.5rem 40px"
+              : showFiltersForMatch
+              ? "100px 1.5rem 40px"
+              : 0,
+            // eslint-disable-next-line no-nested-ternary
+            sm: !isMatch
+              ? "100px 1.5rem 40px"
+              : showFiltersForMatch
+              ? "100px 1.5rem 40px"
+              : 0,
+          },
         }}
       >
         {children}
