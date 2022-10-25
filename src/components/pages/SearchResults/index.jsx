@@ -18,7 +18,7 @@ export const SearchResults = () => {
   const location = useLocation();
   const parsedQuery = queryString.parse(location.search);
   const resetQueries = location.state?.resetQueries;
-  const { view, qtyView } = parsedQuery;
+  const { view = "list", qtyView = 1 } = parsedQuery;
 
   const navigateTo = useNavigate();
   const handleFiltering = useCallback((querySearch) => {
