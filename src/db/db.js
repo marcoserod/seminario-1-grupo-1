@@ -4,8 +4,17 @@ import ricardo from "../assets/ricardo-lopez.png";
 import maria from "../assets/maria.png";
 import paula from "../assets/paula.png";
 import franco from "../assets/franco.png";
+import sergio from "../assets/Sergio.jpg";
+import juan from "../assets/juan.jpg";
 
 export const db = {
+  mentees: [
+    { id: 1, studentName: "Paula Gómez", img: paula, joined: "02-02-2020" },
+    { id: 2, studentName: "Franco García", img: franco, joined: "02-12-2019" },
+    { id: 3, studentName: "María Gonzalez", img: maria, joined: "02-03-2018" },
+    { id: 4, studentName: "Sergio Flores", img: sergio, joined: "31-10-2020" },
+    { id: 5, studentName: "Juan Rivera", img: juan, joined: "05-11-2016" },
+  ],
   mentors: [
     {
       id: 2,
@@ -22,6 +31,7 @@ export const db = {
         "MongoDB",
         "Web",
       ],
+      mentees: [1, 2, 3, 4, 5],
       services: ["free-mail", "weekly-calls"],
       rating: 5,
       exp: 7,
@@ -67,7 +77,6 @@ export const db = {
     {
       id: 1,
       name: "Thiago Carpintero",
-      recommended: true,
       jobTitle: "Team Lead",
       jobCompany: "Stripe",
       skills: [
@@ -81,6 +90,7 @@ export const db = {
         "Product Design",
         "Web",
       ],
+      mentees: [1, 2, 3, 4, 5],
       services: ["fast-replies", "free-mail", "monthly-calls"],
       rating: 4,
       img: thiago,
@@ -138,6 +148,7 @@ export const db = {
         "Strategy",
         "Business",
       ],
+      mentees: [1, 2, 3, 4, 5],
       services: ["free-mail", "monthly-calls"],
       rating: 3.5,
       exp: 6,

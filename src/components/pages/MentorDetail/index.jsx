@@ -5,14 +5,12 @@ import {
   LinkedIn,
   MailOutline,
   OfflineBoltOutlined,
-  ThumbUpAltRounded,
 } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Avatar,
-  Badge,
   Card,
   CardContent,
   CardMedia,
@@ -24,6 +22,7 @@ import {
   Rating,
   Tooltip,
   Typography,
+  CardHeader,
 } from "@mui/material";
 import { Box, Container, Stack } from "@mui/system";
 import { useEffect, useRef } from "react";
@@ -33,15 +32,25 @@ import { db } from "../../../db/db";
 import { Comment } from "../../molecules/Comment";
 import mentorApp from "../../../assets/MentorearAPP.avif";
 import medium from "../../../assets/medium.webp";
-import certificate from "../../../assets/certificate.jpg";
 
 export const MentorDetail = () => {
   const { mentorID } = useParams();
   const data = db.mentors.find((mentor) => mentor.id.toString() === mentorID);
+  const mentees = data.mentees.map((id) => {
+    return db.mentees.find((mentee) => {
+      return mentee.id === id;
+    });
+  });
   const skillRef = useRef(null);
+  const menteesRef = useRef(null);
 
   const handleGoToSkills = () => {
     skillRef.current.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+  const handleGoToMentees = () => {
+    menteesRef.current.scrollIntoView({
       behavior: "smooth",
     });
   };
@@ -57,44 +66,19 @@ export const MentorDetail = () => {
           backgroundImage: (theme) => theme.palette.primary.mainGradient,
         }}
       >
-        <Container sx={{ display: "flex" }} maxWidth="false">
-          <Badge
-            badgeContent={
-              data.recommended ? (
-                <Chip
-                  sx={{
-                    transform: "translateY(3rem)",
-                  }}
-                  component="span"
-                  label={
-                    <Box display="flex" alignItems="center">
-                      <ThumbUpAltRounded sx={{ mr: 1 }} />
-                      Recomendado
-                    </Box>
-                  }
-                  color="primary"
-                  variant="filled"
-                />
-              ) : (
-                0
-              )
-            }
-            overlap="circular"
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          >
-            <Avatar
-              src={data.img}
-              sx={{
-                maxWidth: "180px",
-                maxHeight: "180px",
-                width: "100%",
-                height: "100%",
-                fontSize: "2rem",
-                alignSelf: "center",
-                transform: "translateY(3rem)",
-              }}
-            />
-          </Badge>
+        <Container sx={{ display: "flex" }}>
+          <Avatar
+            src={data.img}
+            sx={{
+              maxWidth: "180px",
+              maxHeight: "180px",
+              width: "100%",
+              height: "100%",
+              fontSize: "2rem",
+              alignSelf: "center",
+              transform: "translateY(3rem)",
+            }}
+          />
           <Box sx={{ flexGrow: 1 }} />
           <Box alignSelf="flex-end">
             <IconButton
@@ -114,9 +98,9 @@ export const MentorDetail = () => {
           </Box>
         </Container>
       </Box>
-      <Container sx={{ marginTop: "4rem" }} maxWidth="false">
+      <Container sx={{ marginTop: "4rem" }}>
         <Grid container>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={5}>
             <Stack>
               <Rating
                 value={data.rating}
@@ -179,6 +163,7 @@ export const MentorDetail = () => {
               )}
             </Grid>
           </Grid>
+
           <Grid item xs={12} md={4}>
             <Stack>
               <Typography color="primary" gutterBottom>
@@ -200,10 +185,29 @@ export const MentorDetail = () => {
               </Grid>
             </Stack>
           </Grid>
+          <Grid item xs={12} md={3}>
+            <Stack>
+              <Typography color="primary" gutterBottom>
+                Mentees
+              </Typography>
+              <Grid container spacing={1}>
+                {mentees.slice(0, 3).map((m) => (
+                  <Grid item>
+                    <Avatar alt="Remy Sharp" src={m.img} />
+                  </Grid>
+                ))}
+                {mentees.length - 3 > 0 && (
+                  <IconButton color="primary" onClick={handleGoToMentees}>{`+${
+                    mentees.length - 3
+                  }`}</IconButton>
+                )}
+              </Grid>
+            </Stack>
+          </Grid>
         </Grid>
       </Container>
       <Divider sx={{ mb: 1, mt: 1 }} />
-      <Container maxWidth="false">
+      <Container>
         <Accordion defaultExpanded elevation={0}>
           <AccordionSummary
             expandIcon={<ExpandMore />}
@@ -221,7 +225,33 @@ export const MentorDetail = () => {
           </AccordionDetails>
         </Accordion>
       </Container>
-      <Container maxWidth="false">
+      <Container>
+        <Accordion defaultExpanded elevation={0} ref={menteesRef}>
+          <AccordionSummary
+            expandIcon={<ExpandMore />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography color="primary" variant="h6" sx={{ fontWeight: 600 }}>
+              Mentees
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={1}>
+              {mentees.map((m) => (
+                <Card sx={{ maxWidth: 220, ml: "1%" }}>
+                  <CardHeader
+                    avatar={<Avatar alt="Remy Sharp" src={m.img} />}
+                    title={m.studentName}
+                    subheader={`Desde: ${m.joined}`}
+                  />
+                </Card>
+              ))}
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+      </Container>
+      <Container>
         <Accordion defaultExpanded elevation={0}>
           <AccordionSummary
             expandIcon={<ExpandMore />}
@@ -241,7 +271,7 @@ export const MentorDetail = () => {
           </AccordionDetails>
         </Accordion>
       </Container>
-      <Container maxWidth="false">
+      <Container>
         <Accordion defaultExpanded elevation={0} ref={skillRef}>
           <AccordionSummary
             expandIcon={<ExpandMore />}
@@ -263,42 +293,7 @@ export const MentorDetail = () => {
           </AccordionDetails>
         </Accordion>
       </Container>
-      <Container maxWidth="false">
-        <Accordion defaultExpanded elevation={0}>
-          <AccordionSummary
-            expandIcon={<ExpandMore />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography color="primary" variant="h6" sx={{ fontWeight: 600 }}>
-              Certificaciones
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Grid container spacing={1}>
-              <Grid item key="cert">
-                <Card sx={{ maxWidth: 300 }}>
-                  <CardMedia
-                    component="img"
-                    height="150px"
-                    src={certificate}
-                    alt="green iguana"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {data.skills[0]}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Certificado en {data.skills[0]} de {data.name}.
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-          </AccordionDetails>
-        </Accordion>
-      </Container>
-      <Container maxWidth="false">
+      <Container>
         <Accordion defaultExpanded elevation={0}>
           <AccordionSummary
             expandIcon={<ExpandMore />}
