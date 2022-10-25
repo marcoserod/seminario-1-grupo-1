@@ -41,6 +41,10 @@ export const MatchFinder = () => {
     "matches",
     true
   );
+  // To remove old cached structure
+  if (cachedMatches && cachedMatches[0].mentor) {
+    removeCachedMatches();
+  }
   const [matches, setMatches] = useState(cachedMatches || null);
   const [interests, setInterests] = useState([
     "JavaScript",
