@@ -15,6 +15,7 @@ import {
   Badge,
   Card,
   CardContent,
+  CardHeader,
   CardMedia,
   Chip,
   Divider,
@@ -38,11 +39,21 @@ import certificate from "../../../assets/certificate.jpg";
 export const MentorDetail = () => {
   const { mentorID } = useParams();
   const data = db.mentors.find((mentor) => mentor.id.toString() === mentorID);
+  const mentees = data.mentees.map((id) => db.mentees[id - 1]);
   const skillRef = useRef(null);
+  const menteesRef = useRef(null);
 
   const handleGoToSkills = () => {
     skillRef.current.scrollIntoView({
       behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  const handleGoToMentees = () => {
+    menteesRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
     });
   };
 
@@ -116,7 +127,7 @@ export const MentorDetail = () => {
       </Box>
       <Container sx={{ marginTop: "4rem" }} maxWidth="false">
         <Grid container>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={6}>
             <Stack>
               <Rating
                 value={data.rating}
@@ -179,26 +190,49 @@ export const MentorDetail = () => {
               )}
             </Grid>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Stack>
-              <Typography color="primary" gutterBottom>
-                Hábilidades
-              </Typography>
-              <Grid container spacing={1}>
-                {data.skills.slice(0, 4).map((skill) => (
-                  <Grid item key={skill}>
-                    <Chip label={skill} />
-                  </Grid>
-                ))}
-                {data.skills.length - 4 > 0 && (
-                  <Grid item key="plus-skills">
-                    <IconButton color="primary" onClick={handleGoToSkills}>{`+${
-                      data.skills.length - 4
-                    }`}</IconButton>
-                  </Grid>
-                )}
-              </Grid>
-            </Stack>
+          <Grid item container xs={12} md={6} columnSpacing={2} rowSpacing={2}>
+            <Grid item xs={12} md={12} lg={6}>
+              <Stack>
+                <Typography color="primary" gutterBottom>
+                  Hábilidades
+                </Typography>
+                <Grid container spacing={1}>
+                  {data.skills.slice(0, 4).map((skill) => (
+                    <Grid item key={skill}>
+                      <Chip label={skill} />
+                    </Grid>
+                  ))}
+                  {data.skills.length - 4 > 0 && (
+                    <Grid item key="plus-skills">
+                      <IconButton
+                        color="primary"
+                        onClick={handleGoToSkills}
+                      >{`+${data.skills.length - 4}`}</IconButton>
+                    </Grid>
+                  )}
+                </Grid>
+              </Stack>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <Stack>
+                <Typography color="primary" gutterBottom>
+                  Mentees
+                </Typography>
+                <Grid container spacing={1}>
+                  {mentees.slice(0, 3).map((m) => (
+                    <Grid item key={m.id}>
+                      <Avatar alt="Remy Sharp" src={m.img} />
+                    </Grid>
+                  ))}
+                  {mentees.length - 3 > 0 && (
+                    <IconButton
+                      color="primary"
+                      onClick={handleGoToMentees}
+                    >{`+${mentees.length - 3}`}</IconButton>
+                  )}
+                </Grid>
+              </Stack>
+            </Grid>
           </Grid>
         </Grid>
       </Container>
@@ -218,6 +252,39 @@ export const MentorDetail = () => {
             <Typography variant="body1" gutterBottom>
               {data.description}
             </Typography>
+          </AccordionDetails>
+        </Accordion>
+      </Container>
+      <Container maxWidth="false">
+        <Accordion
+          defaultExpanded
+          elevation={0}
+          ref={menteesRef}
+          sx={{ scrollMarginTop: "50px  " }}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMore />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography color="primary" variant="h6" sx={{ fontWeight: 600 }}>
+              Mentees
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={1}>
+              {mentees.map((m) => (
+                <Grid item>
+                  <Card sx={{ maxWidth: 220 }}>
+                    <CardHeader
+                      avatar={<Avatar alt="Remy Sharp" src={m.img} />}
+                      title={m.studentName}
+                      subheader={`Desde: ${m.joined}`}
+                    />
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
           </AccordionDetails>
         </Accordion>
       </Container>
@@ -242,7 +309,12 @@ export const MentorDetail = () => {
         </Accordion>
       </Container>
       <Container maxWidth="false">
-        <Accordion defaultExpanded elevation={0} ref={skillRef}>
+        <Accordion
+          defaultExpanded
+          elevation={0}
+          ref={skillRef}
+          sx={{ scrollMarginTop: "50px  " }}
+        >
           <AccordionSummary
             expandIcon={<ExpandMore />}
             aria-controls="panel1a-content"
