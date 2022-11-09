@@ -6,6 +6,14 @@ import paula from "../assets/paula.png";
 import franco from "../assets/franco.png";
 import sergio from "../assets/Sergio.jpg";
 import juan from "../assets/juan.jpg";
+import ibm from "../assets/IBM.png";
+import stripe from "../assets/Stripe.png";
+import accenture from "../assets/accenture.jpg";
+import globant from "../assets/globant.png";
+import mercadolibre from "../assets/mercadolibre.jpg";
+import jpmorgan from "../assets/jpmorgan.png";
+import pedidosya from "../assets/pedidosya.png";
+import google from "../assets/google.png";
 
 export const db = {
   mentees: [
@@ -73,6 +81,33 @@ export const db = {
           id: 2,
         },
       ],
+      experience: [
+        {
+          id: 1,
+          jobTitle: "Pasante de desarrollo de software",
+          img: accenture,
+          jobDescription:
+            "Di mis primeros pasos en el mundo de la programacion como pasante, usando tecnologias de backend",
+          startDate: "2015-01-01",
+          endDate: "2016-12-01",
+        },
+        {
+          id: 2,
+          jobTitle: "Desarrolladora Backend",
+          img: globant,
+          jobDescription: "Desarrolladora backend en globant",
+          startDate: "2017-01-01",
+          endDate: "2020-01-01",
+        },
+        {
+          id: 2,
+          jobTitle: "Desarrolladora Backend",
+          img: mercadolibre,
+          jobDescription: "Desarrolladora backend en Mercadolibre",
+          startDate: "2020-01-01",
+          endDate: new Date().toISOString().slice(0, 10),
+        },
+      ],
     },
     {
       id: 1,
@@ -133,6 +168,27 @@ export const db = {
           id: 2,
         },
       ],
+      experience: [
+        {
+          id: 1,
+          jobTitle: "React developer",
+          img: ibm,
+          jobDescription:
+            "Di mis primeros pasos y trabaje varios años en IBM como front end developer",
+          startDate: "2014-09-20",
+          endDate: "2017-03-02",
+        },
+
+        {
+          id: 2,
+          jobTitle: "Team Lead",
+          img: stripe,
+          jobDescription:
+            "Actualmente soy Team Lead de el equipo de web development en stripe",
+          startDate: "2017-04-01",
+          endDate: new Date().toISOString().slice(0, 10),
+        },
+      ],
     },
     {
       id: 3,
@@ -189,6 +245,34 @@ export const db = {
           },
           rating: 3,
           id: 2,
+        },
+      ],
+      experience: [
+        {
+          id: 1,
+          jobTitle: "Project Manager Intern",
+          img: jpmorgan,
+          jobDescription:
+            "Di mis primeros pasos en el mundo del management como pasante en Jp Morgan",
+          startDate: "2016-01-01",
+          endDate: "2017-01-01",
+        },
+        {
+          id: 2,
+          jobTitle: "Scrum Master",
+          img: pedidosya,
+          jobDescription:
+            "Entendiendo el mundo del management me desempeñe como scrum master en pedidos ya",
+          startDate: "2018-01-01",
+          endDate: "2019-12-12",
+        },
+        {
+          id: 3,
+          jobTitle: "Scrum Master",
+          img: google,
+          jobDescription: "Scrum master en un proyecto de desarrollo web",
+          startDate: "2020-01-01",
+          endDate: new Date().toISOString().slice(0, 10),
         },
       ],
     },

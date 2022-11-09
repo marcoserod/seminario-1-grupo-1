@@ -32,6 +32,7 @@ import { useParams } from "react-router-dom";
 
 import { db } from "../../../db/db";
 import { Comment } from "../../molecules/Comment";
+import { Experience } from "../../molecules/Experience";
 import mentorApp from "../../../assets/MentorearAPP.avif";
 import medium from "../../../assets/medium.webp";
 import certificate from "../../../assets/certificate.jpg";
@@ -303,6 +304,26 @@ export const MentorDetail = () => {
             <Grid container rowSpacing={2}>
               {data.reviews.map((review) => (
                 <Comment key={review.id} review={review} />
+              ))}
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+      </Container>
+      <Container maxWidth="false">
+        <Accordion defaultExpanded elevation={0}>
+          <AccordionSummary
+            expandIcon={<ExpandMore />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography color="primary" variant="h6" sx={{ fontWeight: 600 }}>
+              Experiencia
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container rowSpacing={2} sx={{ flexDirection: "column" }}>
+              {data.experience.map((experiencia) => (
+                <Experience key={experiencia.id} experience={experiencia} />
               ))}
             </Grid>
           </AccordionDetails>
