@@ -7,6 +7,7 @@ import { SearchResults } from "./components/pages/SearchResults";
 import { MentorDetail } from "./components/pages/MentorDetail";
 import { MatchFinder } from "./components/pages/MatchFinder";
 import { SendFeedback } from "./components/pages/Feedback";
+import { TermsAndConditions } from "./components/pages/Terms";
 
 function App() {
   const theme = createTheme({
@@ -40,6 +41,10 @@ function App() {
               <Route path="/mentor/search" element={<SearchResults />} />
               <Route path="/mentor/:mentorID" element={<MentorDetail />} />
               <Route path="/feedback/" element={<SendFeedback />} />
+              <Route
+                path="/termsAndConditions/"
+                element={<TermsAndConditions />}
+              />
             </Routes>
           </Layout>
         </BrowserRouter>
