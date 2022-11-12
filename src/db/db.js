@@ -100,7 +100,7 @@ export const db = {
           endDate: "2020-01-01",
         },
         {
-          id: 2,
+          id: 3,
           jobTitle: "Desarrolladora Backend",
           img: mercadolibre,
           jobDescription: "Desarrolladora backend en Mercadolibre",

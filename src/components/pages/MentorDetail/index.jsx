@@ -58,6 +58,31 @@ export const MentorDetail = () => {
     });
   };
 
+  const orderExperiences = (experiencias) => {
+    // ordenar de manera descendente
+    let i = 0;
+    let j = 0;
+    const auxiliar = experiencias;
+    while (i < auxiliar.length) {
+      j = i;
+      while (j < auxiliar.length) {
+        let aux;
+        const d1 = new Date(auxiliar[i].endDate);
+        const d2 = new Date(auxiliar[j].endDate);
+        if (d1 < d2) {
+          aux = auxiliar[i];
+          auxiliar[i] = auxiliar[j];
+          auxiliar[j] = aux;
+        }
+        j += 1;
+      }
+      i += 1;
+    }
+    return auxiliar;
+  };
+
+  const experience = orderExperiences(data.experience);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -322,7 +347,7 @@ export const MentorDetail = () => {
           </AccordionSummary>
           <AccordionDetails>
             <Grid container rowSpacing={2} sx={{ flexDirection: "column" }}>
-              {data.experience.map((experiencia) => (
+              {experience.map((experiencia) => (
                 <Experience key={experiencia.id} experience={experiencia} />
               ))}
             </Grid>
