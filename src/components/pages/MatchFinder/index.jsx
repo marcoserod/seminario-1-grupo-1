@@ -113,7 +113,6 @@ export const MatchFinder = () => {
     if (endTime - startTime < 1000) {
       setTimeout(() => setIsMatching(false), 2000);
     }
-    console.log(result);
     setMatches(result);
     setTimeout(() => setChachedMatches(result), 10000);
     return result;

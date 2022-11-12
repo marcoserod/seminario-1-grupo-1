@@ -32,6 +32,7 @@ import { useParams } from "react-router-dom";
 
 import { db } from "../../../db/db";
 import { Comment } from "../../molecules/Comment";
+import { Experience } from "../../molecules/Experience";
 import mentorApp from "../../../assets/MentorearAPP.avif";
 import medium from "../../../assets/medium.webp";
 import certificate from "../../../assets/certificate.jpg";
@@ -56,6 +57,31 @@ export const MentorDetail = () => {
       block: "start",
     });
   };
+
+  const orderExperiences = (experiencias) => {
+    // ordenar de manera descendente
+    let i = 0;
+    let j = 0;
+    const auxiliar = experiencias;
+    while (i < auxiliar.length) {
+      j = i;
+      while (j < auxiliar.length) {
+        let aux;
+        const d1 = new Date(auxiliar[i].endDate);
+        const d2 = new Date(auxiliar[j].endDate);
+        if (d1 < d2) {
+          aux = auxiliar[i];
+          auxiliar[i] = auxiliar[j];
+          auxiliar[j] = aux;
+        }
+        j += 1;
+      }
+      i += 1;
+    }
+    return auxiliar;
+  };
+
+  const experience = orderExperiences(data.experience);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -303,6 +329,26 @@ export const MentorDetail = () => {
             <Grid container rowSpacing={2}>
               {data.reviews.map((review) => (
                 <Comment key={review.id} review={review} />
+              ))}
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+      </Container>
+      <Container maxWidth="false">
+        <Accordion defaultExpanded elevation={0}>
+          <AccordionSummary
+            expandIcon={<ExpandMore />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography color="primary" variant="h6" sx={{ fontWeight: 600 }}>
+              Experiencia
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container rowSpacing={2} sx={{ flexDirection: "column" }}>
+              {experience.map((experiencia) => (
+                <Experience key={experiencia.id} experience={experiencia} />
               ))}
             </Grid>
           </AccordionDetails>
