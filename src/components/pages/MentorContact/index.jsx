@@ -25,6 +25,7 @@ import { useFormik } from "formik";
 import { Check } from "@mui/icons-material";
 import { db } from "../../../db/db";
 import { Storage } from "../../../utils/Storage";
+import { Toast } from "../../molecules/Toast";
 
 export const MentorContact = () => {
   const { mentorID } = useParams();
@@ -63,6 +64,7 @@ export const MentorContact = () => {
         date: new Date(),
       });
       setCachedApplications(newApplications);
+      Toast(`Tu solicitud a ${data.name} ha sido enviada. Vamos al dashboard!`);
       navigateTo("/dashboard");
     },
   });

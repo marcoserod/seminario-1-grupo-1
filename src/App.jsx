@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { ToastContainer } from "react-toastify";
 import { Home } from "./components/pages/Home";
 import Layout from "./components/layout/Layout";
 import { SearchResults } from "./components/pages/SearchResults";
@@ -11,6 +12,7 @@ import { TermsAndConditions } from "./components/pages/Terms";
 import { MentorContact } from "./components/pages/MentorContact";
 import { Dashboard } from "./components/pages/Dashboard";
 import { MentorRegister } from "./components/pages/MentorRegister";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const theme = createTheme({
@@ -58,6 +60,7 @@ function App() {
           </Layout>
         </BrowserRouter>
       </div>
+      <ToastContainer />
     </ThemeProvider>
   );
 }

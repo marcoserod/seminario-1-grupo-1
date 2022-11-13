@@ -6,10 +6,7 @@ import {
   Button,
   FormControl,
   Grid,
-  InputLabel,
   Link,
-  MenuItem,
-  Select,
   Step,
   StepLabel,
   Stepper,
@@ -18,14 +15,13 @@ import {
 } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React, { useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { useFormik } from "formik";
 
 import { UploadFile } from "@mui/icons-material";
 import { db } from "../../../db/db";
 
 export const MentorRegister = () => {
-  const navigateTo = useNavigate();
   const [previewImg, setPreviewImg] = useState("");
 
   const steps = ["Sobre vos", "Perfil", "Experiencia"];
