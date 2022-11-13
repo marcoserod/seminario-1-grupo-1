@@ -10,6 +10,7 @@ import { SendFeedback } from "./components/pages/Feedback";
 import { TermsAndConditions } from "./components/pages/Terms";
 import { MentorContact } from "./components/pages/MentorContact";
 import { Dashboard } from "./components/pages/Dashboard";
+import { MentorRegister } from "./components/pages/MentorRegister";
 
 function App() {
   const theme = createTheme({
@@ -46,10 +47,11 @@ function App() {
                 path="/mentor/:mentorID/contact"
                 element={<MentorContact />}
               />
+              <Route path="/mentor/register" element={<MentorRegister />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/feedback/" element={<SendFeedback />} />
+              <Route path="/feedback" element={<SendFeedback />} />
               <Route
-                path="/termsAndConditions/"
+                path="/termsAndConditions"
                 element={<TermsAndConditions />}
               />
             </Routes>

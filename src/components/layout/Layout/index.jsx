@@ -4,12 +4,27 @@ import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Container from "@mui/material/Container";
-import { cloneElement } from "react";
-import { Link } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { cloneElement, useEffect, useState } from "react";
+import {
+  Avatar,
+  Drawer,
+  IconButton,
+  Link,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import { Box } from "@mui/system";
 import { motion } from "framer-motion";
 import styled from "@emotion/styled";
+import {
+  DashboardOutlined,
+  FeedbackOutlined,
+  SchoolOutlined,
+} from "@mui/icons-material";
 import { ReactComponent as FilledLogo } from "../../../assets/SShipFilledLogo.svg";
 
 function ElevationScroll(props) {
@@ -36,6 +51,33 @@ const StyledSvg = styled.span`
 
 export default function Layout(props) {
   const { children } = props;
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const location = useLocation();
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-expressions
+    isDrawerOpen && toggleDrawer();
+  }, [location]);
+
+  const pages = [
+    {
+      route: "/dashboard/",
+      icon: <DashboardOutlined />,
+      label: "Dashboard",
+    },
+    {
+      route: "/feedback/",
+      icon: <FeedbackOutlined />,
+      label: "Feedback",
+    },
+    {
+      route: "/mentor/register/",
+      icon: <SchoolOutlined />,
+      label: "Quiero ser mentor",
+    },
+  ];
   return (
     <>
       <CssBaseline />
@@ -124,11 +166,49 @@ export default function Layout(props) {
               <Link
                 underline="hover"
                 component={RouterLink}
+                to="/dashboard/"
+                sx={{
+                  color: "unset",
+                  mr: 2,
+                  display: { xs: "none", sm: "unset" },
+                }}
+              >
+                DASHBOARD
+              </Link>
+              <Link
+                underline="hover"
+                component={RouterLink}
                 to="/feedback/"
-                sx={{ color: "unset" }}
+                sx={{
+                  color: "unset",
+                  mr: 2,
+                  display: { xs: "none", sm: "unset" },
+                }}
               >
                 FEEDBACK
               </Link>
+              <IconButton onClick={toggleDrawer}>
+                <Avatar />
+              </IconButton>
+              <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
+                <List>
+                  {pages.map(({ label, icon, route }, index) => (
+                    <ListItem
+                      button
+                      to={route}
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={index}
+                      disablePadding
+                      component={RouterLink}
+                    >
+                      <ListItemButton selected={location.pathname === route}>
+                        <ListItemIcon>{icon}</ListItemIcon>
+                        <ListItemText primary={label} />
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                </List>
+              </Drawer>
             </Toolbar>
           </Container>
         </AppBar>

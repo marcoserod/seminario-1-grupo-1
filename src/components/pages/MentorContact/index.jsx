@@ -24,11 +24,16 @@ import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { Check } from "@mui/icons-material";
 import { db } from "../../../db/db";
+import { Storage } from "../../../utils/Storage";
 
 export const MentorContact = () => {
   const { mentorID } = useParams();
   const navigateTo = useNavigate();
   const data = db.mentors.find((mentor) => mentor.id.toString() === mentorID);
+  const [cachedApplications, setCachedApplications] = Storage(
+    "applications",
+    true
+  );
 
   const steps = ["Sobre vos", "Objetivos", "Expectativas"];
 
@@ -50,11 +55,14 @@ export const MentorContact = () => {
       expectation: "",
     },
     onSubmit: (values) => {
-      db.loggedUser.applications.push({
+      const newApplications = cachedApplications || [];
+      newApplications.push({
         ...values,
         mentorID: data.id,
         status: "pending",
+        date: new Date(),
       });
+      setCachedApplications(newApplications);
       navigateTo("/dashboard");
     },
   });
