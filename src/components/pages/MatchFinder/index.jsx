@@ -206,6 +206,7 @@ export const MatchFinder = () => {
             ref={container}
             style={{ position: "relative" }}
             maxWidth="false"
+            disableGutters
           >
             <FiltersDrawer
               {...{

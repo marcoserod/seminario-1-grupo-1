@@ -1,5 +1,6 @@
 import {
   Call,
+  ConnectWithoutContact,
   ExpandMore,
   GitHub,
   LinkedIn,
@@ -13,6 +14,7 @@ import {
   AccordionSummary,
   Avatar,
   Badge,
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -28,7 +30,7 @@ import {
 } from "@mui/material";
 import { Box, Container, Stack } from "@mui/system";
 import { useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link as RouterLink } from "react-router-dom";
 
 import { db } from "../../../db/db";
 import { Comment } from "../../molecules/Comment";
@@ -471,6 +473,26 @@ export const MentorDetail = () => {
           </AccordionDetails>
         </Accordion>
       </Container>
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 0,
+          width: "100%",
+          padding: "1rem",
+
+          backgroundColor: (theme) => theme.palette.background.default,
+        }}
+      >
+        <Button
+          fullWidth
+          startIcon={<ConnectWithoutContact />}
+          variant="contained"
+          component={RouterLink}
+          to="contact"
+        >
+          Contactar
+        </Button>
+      </Box>
     </Box>
   );
 };

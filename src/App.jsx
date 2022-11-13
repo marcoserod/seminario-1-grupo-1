@@ -8,6 +8,8 @@ import { MentorDetail } from "./components/pages/MentorDetail";
 import { MatchFinder } from "./components/pages/MatchFinder";
 import { SendFeedback } from "./components/pages/Feedback";
 import { TermsAndConditions } from "./components/pages/Terms";
+import { MentorContact } from "./components/pages/MentorContact";
+import { Dashboard } from "./components/pages/Dashboard";
 
 function App() {
   const theme = createTheme({
@@ -40,6 +42,11 @@ function App() {
               <Route path="/mentor/match" element={<MatchFinder />} />
               <Route path="/mentor/search" element={<SearchResults />} />
               <Route path="/mentor/:mentorID" element={<MentorDetail />} />
+              <Route
+                path="/mentor/:mentorID/contact"
+                element={<MentorContact />}
+              />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/feedback/" element={<SendFeedback />} />
               <Route
                 path="/termsAndConditions/"

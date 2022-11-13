@@ -16,6 +16,9 @@ import pedidosya from "../assets/pedidosya.png";
 import google from "../assets/google.png";
 
 export const db = {
+  loggedUser: {
+    applications: [],
+  },
   mentees: [
     { id: 1, studentName: "Paula Gómez", img: paula, joined: "02-02-2020" },
     { id: 2, studentName: "Franco García", img: franco, joined: "02-12-2019" },
