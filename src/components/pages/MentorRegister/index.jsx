@@ -38,11 +38,16 @@ export const MentorRegister = () => {
 
   const formik = useFormik({
     initialValues: {
-      about: "",
-      situation: "",
-      goal: "",
-      expectation: "",
+      dni: "",
+      firstName: "",
+      lastName: "",
       email: "",
+      password: "",
+      jobTitle: "",
+      company: "",
+      about: "",
+      linkedIn: "",
+      web: "",
     },
     onSubmit: (values) => {
       console.log(values);
@@ -112,11 +117,12 @@ export const MentorRegister = () => {
                   .
                 </Alert>
                 <Grid container spacing={2} mt={1}>
-                  <Grid item xs={6} display="flex" justifyContent="center">
+                  <Grid item xs={3} display="flex" justifyContent="center">
                     <Avatar src={previewImg} sx={{ height: 64, width: 64 }} />
                   </Grid>
-                  <Grid item xs={6} display="flex" alignItems="center">
+                  <Grid item xs={3} display="flex" alignItems="center">
                     <Button
+                      fullWidth
                       variant="outlined"
                       component="label"
                       startIcon={<UploadFile />}
@@ -131,6 +137,17 @@ export const MentorRegister = () => {
                       />
                     </Button>
                   </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      name="dni"
+                      required
+                      fullWidth
+                      id="dni"
+                      label="DNI"
+                      value={formik.values.dni}
+                      onChange={formik.handleChange}
+                    />
+                  </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       autoComplete="given-name"
@@ -139,7 +156,6 @@ export const MentorRegister = () => {
                       fullWidth
                       id="firstName"
                       label="Nombre"
-                      autoFocus
                       value={formik.values.firstName}
                       onChange={formik.handleChange}
                     />
@@ -249,8 +265,8 @@ export const MentorRegister = () => {
                     fullWidth
                     name="linkedIn"
                     label="LinkedIn URL"
-                    id="jobTitle"
-                    value={formik.values.jobTitle}
+                    id="linkedIn"
+                    value={formik.values.linkedIn}
                     onChange={formik.handleChange}
                   />
                 </Grid>
@@ -260,7 +276,7 @@ export const MentorRegister = () => {
                     name="web"
                     label="Tu pagina personal"
                     id="web"
-                    value={formik.values.jobTitle}
+                    value={formik.values.web}
                     onChange={formik.handleChange}
                   />
                 </Grid>

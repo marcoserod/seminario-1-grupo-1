@@ -1,6 +1,7 @@
 import {
   Call,
   ConnectWithoutContact,
+  Dashboard,
   ExpandMore,
   GitHub,
   LinkedIn,
@@ -38,13 +39,19 @@ import { Experience } from "../../molecules/Experience";
 import mentorApp from "../../../assets/MentorearAPP.avif";
 import medium from "../../../assets/medium.webp";
 import certificate from "../../../assets/certificate.jpg";
+import { Storage } from "../../../utils/Storage";
 
 export const MentorDetail = () => {
   const { mentorID } = useParams();
   const data = db.mentors.find((mentor) => mentor.id.toString() === mentorID);
+  const [cachedApplications] = Storage("applications", true);
   const mentees = data.mentees.map((id) => db.mentees[id - 1]);
   const skillRef = useRef(null);
   const menteesRef = useRef(null);
+  const hasApplied = cachedApplications?.some(
+    (a) => a.mentorID.toString() === mentorID
+  );
+  console.log(cachedApplications, hasApplied);
 
   const handleGoToSkills = () => {
     skillRef.current.scrollIntoView({
@@ -485,12 +492,12 @@ export const MentorDetail = () => {
       >
         <Button
           fullWidth
-          startIcon={<ConnectWithoutContact />}
+          startIcon={hasApplied ? <Dashboard /> : <ConnectWithoutContact />}
           variant="contained"
           component={RouterLink}
-          to="contact"
+          to={hasApplied ? "/dashboard" : "contact"}
         >
-          Contactar
+          {hasApplied ? "Ver mi solictud" : "Contactar"}
         </Button>
       </Box>
     </Box>
