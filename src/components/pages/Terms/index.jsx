@@ -9,11 +9,12 @@ export const TermsAndConditions = () => {
     <Box padding="2rem">
       <Container sx={{ marginTop: "1rem" }} maxWidth="false">
         <Typography component="h1" variant="h4">
-          Terminos y Condiciones de Mentorship
+          Términos y Condiciones de uso de Mentorship
         </Typography>
 
         <Typography variant="h5" gutterBottom>
-          Terminos de uso
+          <br />
+          Términos de uso
         </Typography>
         <Typography variant="body1" gutterBottom>
           A menos que se especifique lo contrario, los términos de uso
@@ -33,29 +34,29 @@ export const TermsAndConditions = () => {
         >
           <ListItem>
             No existen restricciones para los Usuarios en cuanto a ser
-            Consumidores o Usuarios Empresariales;
+            Consumidores o Usuarios Empresariales.
           </ListItem>
           <ListItem>
             Los usuarios deben ser reconocidos como adultos por la ley
-            aplicable;
+            aplicable.
           </ListItem>
           <ListItem>
             Al utilizar este Sitio Web, los Usuarios confirman cumplir con los
             siguientes requisitos: Los menores solo pueden usar este sitio web
-            bajo la supervisión de los padres o de un adulto;
+            bajo la supervisión de los padres o de un adulto.
           </ListItem>
         </List>
 
         <Typography variant="h5" gutterBottom>
-          Creacion de cuenta
+          <br />
+          Creación de cuentas
         </Typography>
         <Typography variant="body1" gutterBottom>
-          Para utilizar el Servicio, los Usuarios deben registrarse o crear una
-          cuenta de Usuario, proporcionando todos los datos o información
+          Para utilizar el Servicio, los Usuarios deberán registrarse o crear
+          una cuenta de Usuario, proporcionando todos los datos o información
           requerida de manera completa y veraz. El no hacerlo causará la
-          indisponibilidad del Servicio. Los usuarios son responsables de
-          mantener sus credenciales de inicio de sesión confidenciales y
-          seguras.
+          indisponibilidad del Servicio. Los usuarios serán los responsables de
+          mantener sus credenciales de acceso de manera confidencial y segura.
         </Typography>
         <Typography variant="body1" gutterBottom>
           Por este motivo, los Usuarios también están obligados a elegir
@@ -64,15 +65,16 @@ export const TermsAndConditions = () => {
         </Typography>
         <Typography variant="body1" gutterBottom>
           Al registrarse, los Usuarios aceptan ser completamente responsables de
-          todas las actividades que ocurran bajo su nombre de usuario y
-          contraseña. Los usuarios están obligados a informar de inmediato y sin
-          ambigüedades al Titular a través de los datos de contacto indicados en
-          este documento, si creen que su información personal, incluidas, entre
-          otras, las cuentas de usuario, las credenciales de acceso o los datos
-          personales, han sido violados, divulgados indebidamente o robados.
+          todas las actividades que ocurran bajo su cuenta. Los usuarios están
+          obligados a informar de inmediato y sin ambigüedades al Titular a
+          través de los datos de contacto indicados en este documento, si creen
+          que su información personal, incluidas, entre otras, las cuentas de
+          usuario, las credenciales de acceso o los datos personales, han sido
+          violados, divulgados indebidamente o robados.
         </Typography>
 
         <Typography variant="h5" gutterBottom>
+          <br />
           Registro de una cuenta
         </Typography>
         <Typography variant="body1" gutterBottom>
@@ -95,7 +97,7 @@ export const TermsAndConditions = () => {
           </ListItem>
         </List>
         <Typography variant="h5" gutterBottom>
-          Suspension de cuentas y borrado
+          Suspensión de cuentas y borrado
         </Typography>
         <List
           sx={{
@@ -119,12 +121,12 @@ export const TermsAndConditions = () => {
           </ListItem>
           <ListItem>
             La suspensión o cancelación de cuentas por causas imputables al
-            Usuario no exime al Usuario del pago de las tasas o precios
-            aplicables.
+            Usuario no exime a este del pago de las tasas o precios aplicables.
           </ListItem>
         </List>
 
         <Typography variant="h5" gutterBottom>
+          <br />
           Responsabilidad por el contenido proporcionado por usuarios
         </Typography>
         <Typography variant="body1" gutterBottom>
@@ -136,7 +138,8 @@ export const TermsAndConditions = () => {
         <Typography variant="body1" gutterBottom>
           No obstante, el Titular se reserva el derecho a retirar, borrar,
           bloquear o rectificar tales contenidos a su discreción y, sin previo
-          aviso, denegar al Usuario que los sube el acceso a este Sitio Web:
+          aviso, denegar al Usuario que los sube el acceso a este Sitio Web si
+          llegase a ocurrir cualquiera de las siguientes situaciones:
         </Typography>
         <List
           sx={{
@@ -148,16 +151,16 @@ export const TermsAndConditions = () => {
           }}
         >
           <ListItem>
-            si se recibe alguna queja basada en dicho contenido;
+            Si se recibe alguna queja basada en dicho contenido.
           </ListItem>
           <ListItem>
-            si se recibe una notificación de infracción de los derechos de
-            propiedad intelectual;
+            Si se recibe una notificación de infracción de los derechos de
+            propiedad intelectual.
           </ListItem>
-          <ListItem>por orden de una autoridad pública; o</ListItem>
+          <ListItem>Si alguna autoridad judicial asi lo dictaminase</ListItem>
           <ListItem>
-            donde el Titular es consciente de que el contenido, siendo accesible
-            a través de este Sitio Web, puede representar un riesgo para los
+            Si el Titular es consciente de que el contenido, siendo accesible a
+            través de este Sitio Web, puede representar un riesgo para los
             Usuarios, terceros y/o la disponibilidad del Servicio.
           </ListItem>
         </List>
@@ -173,13 +176,16 @@ export const TermsAndConditions = () => {
           proporcionaron o proporcionaron a través de este sitio web.
         </Typography>
         <Typography variant="h5" gutterBottom>
+          <br />
           Acceso a recursos externos
         </Typography>
         <Typography variant="body1" gutterBottom>
           A través de este Sitio Web los Usuarios pueden tener acceso a recursos
           externos proporcionados por terceros. Los usuarios reconocen y aceptan
           que el Titular no tiene control sobre dichos recursos y, por lo tanto,
-          no es responsable de su contenido y disponibilidad.
+          no es responsable de su contenido y disponibilidad. Tampoco sera
+          responsable el Titular por daños causados por el uso de dicho
+          contenido de terceros.
         </Typography>
         <Typography variant="body1" gutterBottom>
           Las condiciones aplicables a los recursos proporcionados por terceros,
@@ -189,13 +195,14 @@ export const TermsAndConditions = () => {
         </Typography>
 
         <Typography variant="h5" gutterBottom>
+          <br />
           Uso Aceptable
         </Typography>
         <Typography variant="body1" gutterBottom>
           Este sitio web y el servicio solo se pueden usar dentro del alcance de
           lo que se proporciona, bajo estos Términos y la ley aplicable. Los
           usuarios son los únicos responsables de asegurarse de que su uso de
-          este sitio web y/o el Servicio no infrinja ninguna ley, reglamento o
+          este sitio web y/o el Servicio no infrija ninguna ley, reglamento o
           derecho de terceros aplicable.
         </Typography>
         <Typography variant="body1" gutterBottom>
@@ -217,12 +224,12 @@ export const TermsAndConditions = () => {
             },
           }}
         >
-          <ListItem>violar leyes, reglamentos y/o estos Términos</ListItem>
-          <ListItem>infringir los derechos de terceros;</ListItem>
+          <ListItem>Violar leyes, reglamentos y/o estos Términos.</ListItem>
+          <ListItem>Infringir los derechos de terceros.</ListItem>
           <ListItem>
-            perjudique considerablemente los intereses legítimos del Titular
+            Perjudique considerablemente los intereses legítimos del Titular.
           </ListItem>
-          <ListItem>ofender al Titular o a cualquier tercero.</ListItem>
+          <ListItem>Ofender al Titular, usuarios y/o tercero.</ListItem>
         </List>
       </Container>
     </Box>
