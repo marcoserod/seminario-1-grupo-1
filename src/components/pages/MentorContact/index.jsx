@@ -136,7 +136,7 @@ export const MentorContact = () => {
                         Soy un estudiante y necesito ayuda con mis estudios.
                       </MenuItem>
                       <MenuItem value="just-graduated">
-                        Recién recibido y necesito ayuda con mi primer empleo.
+                        Recién graduado y necesito ayuda con mi primer empleo.
                       </MenuItem>
                       <MenuItem value="change">
                         Quiero cambiar de carrera o de trabajo.
@@ -173,7 +173,7 @@ export const MentorContact = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    terminos y condiciones
+                    Términos y Condiciones de uso
                   </Link>
                   .
                 </Alert>

@@ -105,14 +105,14 @@ export const MentorRegister = () => {
                     unos minutos.
                   </Typography>
                   <br />
-                  Al completar y enviar esta solicitud, estas acetando nuestros{" "}
+                  Al completar y enviar esta solicitud, estas aceptando nuestros{" "}
                   <Link
                     component={RouterLink}
                     to="/termsAndConditions/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    terminos y condiciones
+                    Términos y Condiciones de uso
                   </Link>
                   .
                 </Alert>
@@ -325,7 +325,7 @@ export const MentorRegister = () => {
               >
                 <Alert severity="success">
                   <AlertTitle>Felicitaciones</AlertTitle>
-                  Vamos a revisar tu solitud para comprabar si eres elegible
+                  Vamos a revisar tu solitud para comprobar si eres elegible
                   como mentor. Te informaremos a tu mail:{" "}
                   <strong>{formik.values.email}</strong>.
                 </Alert>
