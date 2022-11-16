@@ -1,4 +1,6 @@
 import {
+  CheckCircleOutlineOutlined,
+  CloseOutlined,
   SentimentDissatisfiedRounded,
   SentimentSatisfiedAltRounded,
 } from "@mui/icons-material";
@@ -44,7 +46,8 @@ export const PercentageDetail = ({
             <Stack
               sx={{ display: "flex", alignItems: "center", height: "100%" }}
             >
-              <SentimentSatisfiedAltRounded color="success" fontSize="large" />
+              <CheckCircleOutlineOutlined color="success" fontSize="large" />
+              Comparten
               <Box
                 sx={{
                   mt: 1,
@@ -70,7 +73,8 @@ export const PercentageDetail = ({
             <Stack
               sx={{ display: "flex", alignItems: "center", height: "100%" }}
             >
-              <SentimentDissatisfiedRounded color="error" fontSize="large" />
+              <CloseOutlined color="error" fontSize="large" />
+              No comparten
               <Box
                 sx={{
                   mt: 1,

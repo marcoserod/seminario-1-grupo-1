@@ -51,7 +51,6 @@ export const MentorDetail = () => {
   const hasApplied = cachedApplications?.some(
     (a) => a.mentorID.toString() === mentorID
   );
-  console.log(cachedApplications, hasApplied);
 
   const handleGoToSkills = () => {
     skillRef.current.scrollIntoView({

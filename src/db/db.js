@@ -27,6 +27,7 @@ export const db = {
     {
       id: 2,
       name: "Verónica Díaz",
+      recommended: true,
       jobTitle: "Desarrolladora Back-end",
       jobCompany: "Mercado Libre",
       skills: [

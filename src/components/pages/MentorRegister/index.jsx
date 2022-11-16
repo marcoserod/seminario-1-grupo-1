@@ -38,16 +38,19 @@ export const MentorRegister = () => {
 
   const formik = useFormik({
     initialValues: {
-      dni: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      jobTitle: "",
-      company: "",
-      about: "",
-      linkedIn: "",
-      web: "",
+      dni: "38100200",
+      firstName: "Antonio",
+      lastName: "Suarez",
+      email: "toni@hotmail.com",
+      password: "1234556",
+      jobTitle: "Back-end developer",
+      company: "HP",
+      about:
+        "Mi nombre es Marcos y soy desarrollador backend con 4 años de experiencia.",
+      linkedIn: "https://www.linkedin.com/marcos",
+      web: "https://github.com/marcos",
+      expectation:
+        "Poder ayudar a la gente que recién comienza en el rubro IT , verlos crecer y aportar lo mejor de mi.",
     },
     onSubmit: (values) => {
       console.log(values);
@@ -243,6 +246,16 @@ export const MentorRegister = () => {
                 <Grid item xs={12}>
                   <FormControl sx={{ width: "100%" }}>
                     <Autocomplete
+                      value={[
+                        "JavaScript",
+                        "Web Development",
+                        "NodeJS",
+                        "Architecture",
+                        "SQL",
+                        "MySQL",
+                        "MongoDB",
+                        "Web",
+                      ]}
                       fullWidth
                       multiple
                       options={db.skills}
