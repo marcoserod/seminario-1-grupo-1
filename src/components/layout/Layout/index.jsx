@@ -26,6 +26,7 @@ import {
   SchoolOutlined,
 } from "@mui/icons-material";
 import { ReactComponent as FilledLogo } from "../../../assets/SShipFilledLogo.svg";
+import miguel from "../../../assets/Miguel.jpeg";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -188,7 +189,7 @@ export default function Layout(props) {
                 FEEDBACK
               </Link>
               <IconButton onClick={toggleDrawer}>
-                <Avatar />
+                <Avatar src={miguel} />
               </IconButton>
               <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer}>
                 <List>

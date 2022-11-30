@@ -51,10 +51,11 @@ export const MentorContact = () => {
   const formik = useFormik({
     initialValues: {
       about:
-        "Soy una desarrolladora trainee de react, estoy buscando un mentor para mejorar mis habilidades.",
-      situation: "student",
-      goal: "Mi objetivo es subir de seniority como desarrolladora, yo por mi parte realice diversos proyectos personales.",
-      expectation: "Guiándome sobre qué camino en la carrera elegir.",
+        "Soy una desarrollador back-end sin experiencia, que acaba de culminar sus estudios, y le gustaria ingresar al mercado laboral.",
+      situation: "just-graduated",
+      goal: "Mi objetivo es conseguir mi primer empleo como desarrollador, yo por mi parte realice diversos proyectos personales.",
+      expectation:
+        "Guiándome sobre qué camino en la carrera elegir, y que pasos debo realizar.",
     },
     onSubmit: (values) => {
       const newApplications = cachedApplications || [];
@@ -178,7 +179,10 @@ export const MentorContact = () => {
                   </Link>
                   .
                 </Alert>
-                <Alert severity="info" sx={{ marginTop: "1rem" }}>
+                <Alert
+                  severity="info"
+                  sx={{ marginTop: "1rem", marginBottom: "1rem" }}
+                >
                   <AlertTitle>
                     Estas por aplicar a la mentoria de{" "}
                     <strong>{data.name}</strong>

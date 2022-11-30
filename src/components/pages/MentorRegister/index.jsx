@@ -20,6 +20,7 @@ import { useFormik } from "formik";
 
 import { UploadFile } from "@mui/icons-material";
 import { db } from "../../../db/db";
+import miguel from "../../../assets/Miguel.jpeg";
 
 export const MentorRegister = () => {
   const [previewImg, setPreviewImg] = useState("");
@@ -38,19 +39,19 @@ export const MentorRegister = () => {
 
   const formik = useFormik({
     initialValues: {
-      dni: "38100200",
-      firstName: "Antonio",
-      lastName: "Suarez",
-      email: "toni@hotmail.com",
+      dni: "40100200",
+      firstName: "Miguel",
+      lastName: "Migueles",
+      email: "miguelmigueles@gmail.com",
       password: "1234556",
       jobTitle: "Back-end developer",
-      company: "HP",
+      company: "Mercado Libre",
       about:
-        "Mi nombre es Marcos y soy desarrollador backend con 4 años de experiencia.",
-      linkedIn: "https://www.linkedin.com/marcos",
-      web: "https://github.com/marcos",
+        "Mi nombre es Miguel y soy desarrollador backend con 5 años de experiencia.",
+      linkedIn: "https://www.linkedin.com/miguelmigueles",
+      web: "https://github.com/miguelmigueles",
       expectation:
-        "Poder ayudar a la gente que recién comienza en el rubro IT , verlos crecer y aportar lo mejor de mi.",
+        "Poder ayudar a quienes recién comiencen en el hermoso rubro IT a crecer, como me han ayudado a mí desde un comienzo. Aportar todo mi conocimiento.",
     },
     onSubmit: (values) => {
       console.log(values);
@@ -121,7 +122,10 @@ export const MentorRegister = () => {
                 </Alert>
                 <Grid container spacing={2} mt={1}>
                   <Grid item xs={3} display="flex" justifyContent="center">
-                    <Avatar src={previewImg} sx={{ height: 64, width: 64 }} />
+                    <Avatar
+                      src={previewImg || miguel}
+                      sx={{ height: 64, width: 64 }}
+                    />
                   </Grid>
                   <Grid item xs={3} display="flex" alignItems="center">
                     <Button
